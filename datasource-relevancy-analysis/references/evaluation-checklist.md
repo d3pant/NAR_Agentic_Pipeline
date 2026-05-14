@@ -5,29 +5,35 @@ Load this file when performing novelty comparisons or when unsure about scoring.
 
 ## Known BioThings API Data Sources (for novelty comparison)
 
+> **Canonical ground truth registries** (always prefer these over the summary below):
+> - [existing-biothings-plugins.json](existing-biothings-plugins.json) — complete registry of all sources in core BioThings APIs, with aliases, identifiers, domains, record counts, and versions (sourced from live /metadata endpoints)
+> - [pending-api-datasources.json](pending-api-datasources.json) — complete registry of all Translator/pending.api datasources with overlap annotations
+>
+> The summary lists below are kept for quick reference but may lag behind the JSON registries.
+
 ### MyChem.info (chemical/drug)
-- DrugBank, ChEMBL, PubChem, ChEBI, SIDER, AEOLUS
-- UniII (UNII), NDC, PharmGKB, DGIdb
-- FDA drug labels, clinical trials annotations
+- DrugBank (Open Data), ChEMBL, PubChem, ChEBI, SIDER, AEOLUS
+- UNII, NDC, PharmGKB, UniChem, DrugCentral, GINAS, GSRS, GtoPdb
+- FDA Orphan Drug, UMLS
 
 ### MyGene.info (gene)
-- NCBI Gene (Entrez), Ensembl, UniProt
-- GO annotations, InterPro, Reactome, KEGG
-- HGNC, MGI, RGD, OMIM (gene-level)
+- NCBI Entrez (gene, GO, genomic_pos, accession, refseq, retired)
+- Ensembl (gene, genomic_pos, acc, pfam, interpro, prosite), Ensembl Protists
+- UniProt, PharmGKB, CPDB (pathways), HomoloGene, AGR Orthology
+- Pharos, ClinGen, ChEMBL (gene-level), NetAffx, UCSC
 
 ### MyDisease.info (disease)
-- MONDO, Disease Ontology, OMIM (disease-level)
-- DisGeNET, HPO, CTD (disease-chemical/gene)
-- Orphanet, GARD
+- MONDO, Disease Ontology, HPO, CTD, UMLS
 
 ### MyVariant.info (variant)
-- ClinVar, dbSNP, gnomAD, ExAC
-- COSMIC, CADD, DANN, dbNSFP
-- ClinGen, PharmGKB (variant-level)
+- ClinVar, dbSNP, gnomAD (genomes + exomes), dbNSFP
+- CADD, COSMIC (v68), CIViC, CGI, SnpEff
+- GWAS Catalog, SNPedia, EVS, Geno2MP, GRASP, Wellderly, EMVClass
 
-### pending.api / All other Biothings API
-- Sources in active evaluation or staging
-- Check https://biothings.ci.transltr.io/ for current list
+### pending.api / Translator KP APIs
+- See [pending-api-datasources.json](pending-api-datasources.json) for the complete list
+- Key deployed APIs: AGR, BindingDB, BioPlanet, DDInter, DGIdb, DISEASES, GO (BP/CC/MF), GTRx, HPO, iDISK, InnateDB, PFOCR, Rhea, SEMMEDDB, SuppKG, TTD, UBERON, repoDB, and more
+- Portals: https://biothings.ncats.io, https://biothings.transltr.io, https://pending.biothings.io
 
 ## Relevance Scoring Guide
 

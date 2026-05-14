@@ -41,6 +41,10 @@ Extract all evaluation-relevant information from the resolved paper before proce
    - 3: Partial overlap with meaningful new fields or better provenance/freshness.
    - 1: Largely redundant with existing sources.
    - See [references/evaluation-checklist.md](references/evaluation-checklist.md) for the known-source comparison list.
+   - **Ground truth registries** (MUST consult for novelty scoring):
+     - [references/existing-biothings-plugins.json](references/existing-biothings-plugins.json) — all sources in core BioThings APIs (MyGene, MyChem, MyVariant, MyDisease), with aliases, identifiers, domains, and record counts
+     - [references/pending-api-datasources.json](references/pending-api-datasources.json) — all Translator/pending.api datasources, with overlap annotations
+   - Match the candidate datasource name and aliases against registry entries. Compare identifiers and domain tags. If a match is found, the candidate has overlap and novelty must account for it.
 
    **Meta-aggregator rule**: If the datasource bundles data from multiple upstream sources (e.g., Harmonizome aggregates 170+ datasets from 80+ resources), do NOT score novelty monolithically. Instead:
    1. List the constituent datasets/sources the resource aggregates.
