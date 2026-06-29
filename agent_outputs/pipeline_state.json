@@ -1,0 +1,84 @@
+{
+    "datasources": {
+        "prime": {
+            "stage": "inspected",
+            "verdict": "RECOMMEND_INGEST",
+            "inspection_status": "VERIFIED",
+            "scores": {
+                "relevance": 9,
+                "novelty": 5,
+                "openness_pass": true,
+                "openness_score": 4
+            },
+            "eval_date": "2026-06-29",
+            "inspection_date": "2026-06-29",
+            "data_url": "https://zenodo.org/records/15711237/files/samples_metadata.csv?download=1",
+            "target_api": "pending.api",
+            "ingestion_path": "bulk_download",
+            "output_dir": "agent_outputs/prime_datasource/",
+            "relevancy_file": "agent_outputs/prime_datasource/prime_relevancy.json",
+            "inspection_file": "agent_outputs/prime_datasource/prime_inspection.json"
+        },
+        "gmrepo": {
+            "stage": "relevancy_complete",
+            "verdict": "RECOMMEND_INGEST",
+            "scores": {
+                "relevance": 8,
+                "novelty": 5,
+                "openness_pass": true,
+                "openness_score": 3
+            },
+            "eval_date": "2026-06-29",
+            "output_dir": "agent_outputs/gmrepo_datasource/",
+            "relevancy_file": "agent_outputs/gmrepo_datasource/gmrepo_relevancy.json"
+        },
+        "gutmetanet": {
+            "stage": "relevancy_complete",
+            "verdict": "NEEDS_REVIEW",
+            "scores": {
+                "relevance": 7,
+                "novelty": 3,
+                "openness_pass": false,
+                "openness_score": 1
+            },
+            "eval_date": "2026-06-29",
+            "blocker": "No stated license — documentation site unreachable at eval time",
+            "output_dir": "agent_outputs/gutmetanet_datasource/",
+            "relevancy_file": "agent_outputs/gutmetanet_datasource/gutmetanet_relevancy.json"
+        },
+        "mami": {
+            "stage": "relevancy_complete",
+            "verdict": "DO_NOT_INGEST",
+            "scores": {
+                "relevance": 5,
+                "novelty": 5,
+                "openness_pass": false,
+                "openness_score": 2
+            },
+            "eval_date": "2026-06-29",
+            "blocker": "Relevance 5/9 — missing BMI and ethnicity per sample; no disease/phenotype data. Openness FAIL — no stated database license, academic-only access qualifier, homepage DNS-unreachable",
+            "output_dir": "agent_outputs/mami_datasource/",
+            "relevancy_file": "agent_outputs/mami_datasource/mami_relevancy.json"
+        },
+        "humanmetagenomedb": {
+            "stage": "inspected",
+            "verdict": "RECOMMEND_INGEST",
+            "inspection_status": "PARTIALLY_VERIFIED",
+            "scores": {
+                "relevance": 8,
+                "novelty": 5,
+                "openness_pass": true,
+                "openness_score": 4
+            },
+            "eval_date": "2026-06-29",
+            "inspection_date": "2026-06-29",
+            "data_url": "https://web.app.ufz.de/hmgdb/",
+            "data_url_note": "No stable bulk file URL. Data requires Shiny session download (browser-triggered CSV export). See inspection JSON for dumper strategy options.",
+            "target_api": "pending.api",
+            "ingestion_path": "hybrid",
+            "output_dir": "agent_outputs/humanmetagenomedb_datasource/",
+            "relevancy_file": "agent_outputs/humanmetagenomedb_datasource/humanmetagenomedb_relevancy.json",
+            "inspection_file": "agent_outputs/humanmetagenomedb_datasource/humanmetagenomedb_inspection.json"
+        }
+    }
+}

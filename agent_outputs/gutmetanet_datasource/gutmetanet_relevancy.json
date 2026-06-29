@@ -1,0 +1,77 @@
+{
+    "name": "gutmetanet",
+    "verdict": "NEEDS_REVIEW",
+    "scores": {
+        "relevance": {
+            "score": 7,
+            "justification": "GutMetaNet contains WGS gut microbiome taxonomic profiles (Kraken2/Bracken on UHGG v2, species-level relative abundances) and 66 health conditions/phenotypes (MeSH-curated) across 21,567 samples — satisfying microbiome and phenotype criteria. Per-sample metadata includes gender, age, BMI, country, diet, and antibiotic usage 'where available' (incomplete; missing values marked NA). Ethnicity is not explicitly present — country used as geographic proxy. Structured tabular downloads available. Published Jan 2025 (actively maintained). MeSH IDs used for phenotypes. Score capped at 7 because: (1) the database's primary focus and novel content is horizontal gene transfer (HGT) events and functional redundancy (FR) profiles — orthogonal to the Demographic-Microbiome KG scope; (2) demographic completeness across samples is unconfirmed; (3) ethnicity not present."
+        },
+        "novelty": {
+            "score": 3,
+            "justification": "Taxonomic profiles (WGS, species-level) partially overlap with GMrepo v3 (same gut WGS domain, similar pipeline), though GutMetaNet is a much smaller subset (21,567 vs 118,965 samples) with less phenotype coverage (66 vs 302 conditions). HGT event data, MGE annotations (transposons, prophages, integrative conjugative elements, etc.), and functional redundancy (nFR/aFR) profiles are entirely novel — not present in any BioThings API. However, these novel entities are outside the primary Demographic-Microbiome KG scope. Score 3: meaningful new data exists (HGT/FR layer, MeSH phenotype linkage), but taxonomic layer is largely covered by GMrepo which should be ingested first."
+        },
+        "openness": {
+            "pass": false,
+            "score": 1,
+            "justification": "FAIL — no license is stated in the paper or abstract. The paper states data are 'freely accessible' and 'freely available' for academic users, but no formal license (CC, MIT, etc.) is named or linked. The documentation site (gutmetadoc.deepomics.org) returned HTTP 503 and the terms page (gutmeta.deepomics.org/terms) was unreachable (ECONNREFUSED) at evaluation time. Per evaluation checklist: 'No stated license: FAIL — assume all rights reserved.' The platform appears to be a web-based analysis tool hosted by a commercial entity (OmicLab Limited / deepomics.org), which increases the likelihood of restrictive terms for bulk redistribution."
+        }
+    },
+    "evidence": {
+        "scope": "21,567 human gut WGS metagenome samples from 96 projects. 66 health conditions (MeSH-curated). Per-sample metadata: country, health phenotype, gender, age, age category, BMI, diet, antibiotic usage (incomplete). Taxonomic profiles: Kraken2/Bracken on UHGG v2 → species-level relative abundances (MPA format). FR profiles: normalized (nFR) and HGT-adjusted (aFR) functional redundancy. HGT events: 14,636 events in 8,049 clusters with MGE annotations (transposons, prophages, genomic islands, integrative conjugative elements, group II introns). KEGG KO annotations on transferred sequences.",
+        "overlap": "Taxonomic profiles (gut WGS, species-level) overlap substantially with GMrepo v3 (already evaluated, RECOMMEND_INGEST). HGT/FR data is novel but out of KG scope. MeSH disease IDs link to MyDisease.info entities.",
+        "entity_types": ["microbiome_sample", "taxon", "hgt_event", "hgt_cluster", "mobile_genetic_element", "functional_redundancy_profile"],
+        "identifiers_found": ["NCBI Taxonomy (via UHGG)", "NCBI BioProject", "NCBI SRA Run Accession", "MeSH Disease IDs", "KEGG KO"],
+        "record_count": 21567
+    },
+    "license": {
+        "name": "Not stated",
+        "url": null,
+        "restrictions": [
+            "No formal license named in paper or accessible documentation",
+            "Documentation site (gutmetadoc.deepomics.org) returned 503 at eval time",
+            "Terms page (gutmeta.deepomics.org/terms) unreachable at eval time",
+            "Platform hosted by OmicLab Limited (commercial entity) — redistribution terms unknown"
+        ]
+    },
+    "urls": {
+        "homepage": "https://gutmetanet.deepomics.org/",
+        "download": [],
+        "api": null,
+        "paper_doi": "10.1093/nar/gkae1007",
+        "pmid": "39526401",
+        "pmc": "PMC11701528",
+        "docs": "https://gutmetadoc.deepomics.org/",
+        "terms": "https://gutmeta.deepomics.org/terms"
+    },
+    "api_info": {
+        "exists": false,
+        "base_url": null,
+        "auth_required": null,
+        "rate_limits": "unknown",
+        "pagination": "unknown",
+        "record_coverage": "unknown — web interface provides download of metadata, taxonomic profiles, FR profiles per sample; bulk REST API not documented in paper"
+    },
+    "target_api": "pending.api",
+    "risks": [
+        "OPENNESS BLOCKER: No stated license — cannot confirm redistribution rights. Must resolve before ingestion.",
+        "Documentation and terms pages unreachable at evaluation time — site reliability risk for a commercial-entity-hosted platform",
+        "Primary data (HGT events, FR profiles) is out of Demographic-Microbiome KG scope — ingestion value limited to taxonomic + metadata layer",
+        "Taxonomic layer largely redundant with GMrepo v3 (same gut WGS domain, fewer samples, less phenotype coverage)",
+        "Demographic completeness unconfirmed — missing values marked NA without stated coverage statistics",
+        "Ethnicity not present as a metadata field (country used as geographic proxy)"
+    ],
+    "next_actions": [
+        "REQUIRED BEFORE PROCEEDING: Confirm license by (1) retrying gutmetadoc.deepomics.org and gutmeta.deepomics.org/terms when site is available, or (2) contacting authors (Li Shuai Cheng, City University of Hong Kong)",
+        "If license is confirmed open (CC-BY or similar): reassess openness score, update verdict to RECOMMEND_INGEST or NEEDS_REVIEW based on demographic completeness",
+        "If license restricts redistribution: maintain DO_NOT_INGEST verdict",
+        "Compare demographic coverage statistics against PRIME and GMrepo before deciding whether to ingest the taxonomic layer",
+        "Do NOT proceed to site-inspection or plugin-generation until license is resolved"
+    ],
+    "evaluated_at": "2026-06-29",
+    "unknowns": [
+        "Formal license / terms of redistribution (site unreachable at eval time)",
+        "Proportion of samples with complete age + sex + BMI metadata",
+        "Bulk download file formats and direct download URLs",
+        "Whether programmatic/API access exists for bulk data retrieval"
+    ]
+}

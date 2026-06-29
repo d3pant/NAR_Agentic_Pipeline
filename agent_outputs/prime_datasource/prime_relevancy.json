@@ -1,0 +1,71 @@
+{
+    "name": "prime",
+    "verdict": "RECOMMEND_INGEST",
+    "scores": {
+        "relevance": {
+            "score": 9,
+            "justification": "PRIME directly satisfies all three primary criteria: (1) species-level 16S rRNA microbiome data (ASV to species level via SILVA 138.2 and Greengenes2 2024.09); (2) phenotypic data across 101 phenotypic categories including disease status; (3) per-sample demographic metadata explicitly covering age, sex/gender, BMI, and lifestyle factors. Additional criteria also met: fully structured tabular CSVs, actively maintained (published Jan 2026 with 24-hour update cadence), and NCBI Taxonomy identifiers used for all taxa."
+        },
+        "novelty": {
+            "score": 5,
+            "justification": "No existing BioThings API (MyChem, MyGene, MyDisease, MyVariant, or any pending.api source) covers 16S rRNA microbiome abundance data. PRIME introduces entirely new entity types (microbiome samples, ASV/taxa abundance profiles) and new relations (sample↔phenotype, sample↔demographics, sample↔body site). 53,449 samples across 111 studies with harmonized metadata represents substantial novel content. NCBI BioProject accessions and NCBI Taxonomy IDs provide clean linkage to existing BioThings entities."
+        },
+        "openness": {
+            "pass": true,
+            "score": 4,
+            "justification": "Data permanently archived on Zenodo (doi:10.5281/zenodo.15711237) under CC-BY 4.0 + MIT licenses. Direct bulk CSV downloads available without login or API key. Live site (primedb.sjtu.edu.cn) also confirmed 'no login or restriction' per paper. RESTful API has no authentication or rate limiting. Only minor restriction is CC-BY attribution requirement."
+        }
+    },
+    "evidence": {
+        "scope": "53,449 human-associated 16S rRNA amplicon sequencing samples from 111 public studies. Covers 93 body sites, 101 phenotypic categories. Per-sample metadata: age, sex, BMI, lifestyle, disease status, geography, sequencing protocol, body site. Taxonomic abundance at phylum→species level (read counts and relative abundances) via SILVA 138.2 and Greengenes2 2024.09.",
+        "overlap": "No overlap with existing BioThings APIs — microbiome sample/abundance data is a new entity type not covered in any current BioThings source. NCBI Taxonomy IDs used for taxa can link to MyGene.info gene data for future cross-entity queries.",
+        "entity_types": ["microbiome_sample", "taxon", "phenotype", "body_site"],
+        "identifiers_found": ["NCBI Taxonomy", "NCBI BioProject", "NCBI SRA Run Accession"],
+        "record_count": 53449
+    },
+    "license": {
+        "name": "CC BY 4.0 + MIT",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "restrictions": ["Attribution required for CC-BY 4.0 component"]
+    },
+    "urls": {
+        "homepage": "https://primedb.sjtu.edu.cn",
+        "download": [
+            "https://zenodo.org/records/15711237/files/samples_metadata.csv?download=1",
+            "https://zenodo.org/records/15711237/files/projects_metadata.csv?download=1",
+            "https://zenodo.org/records/15711237/files/gg_species_relative.csv?download=1",
+            "https://zenodo.org/records/15711237/files/gg_species_absolute.csv?download=1",
+            "https://zenodo.org/records/15711237/files/silva_species_relative.csv?download=1",
+            "https://zenodo.org/records/15711237/files/silva_genus_relative.csv?download=1"
+        ],
+        "api": "https://primedb.sjtu.edu.cn/api/v1",
+        "paper_doi": "10.1093/nar/gkaf1057",
+        "pmid": "41171140",
+        "pmc": "PMC12807763",
+        "zenodo": "https://doi.org/10.5281/zenodo.15711237",
+        "github_r_package": "https://github.com/reckonzzz/primeDB"
+    },
+    "api_info": {
+        "exists": true,
+        "base_url": "https://primedb.sjtu.edu.cn/api/v1",
+        "auth_required": false,
+        "rate_limits": "none enforced",
+        "pagination": "standard REST",
+        "record_coverage": "full — projects, samples, metadata, taxa, phenotypes, countries, abundance tables",
+        "r_package": "primeDB (available on GitHub and Zenodo)"
+    },
+    "target_api": "pending.api",
+    "risks": [
+        "Zenodo archive is a static snapshot; live site may have newer data (24h update cadence) — prefer API for freshest records",
+        "Large file sizes: gg_species_relative.csv is 1.8 GB, gg_species_absolute.csv is 1.6 GB — ingestion pipeline needs chunked processing",
+        "CC-BY attribution obligation must be propagated to downstream BioThings API consumers",
+        "Site hosted on Shanghai Jiao Tong University jCloud — long-term uptime depends on institutional infrastructure; Zenodo archive provides stable fallback"
+    ],
+    "next_actions": [
+        "Run datasource-site-inspection to map download file structure and confirm canonical bulk download URLs",
+        "Prioritize samples_metadata.csv (38.2 MB) + gg_species_relative.csv or silva_species_relative.csv as primary ingest files",
+        "Confirm NCBI Taxonomy ID coverage in abundance tables to enable entity linking",
+        "Proceed to biothings-plugin-generator using Zenodo CSV files as primary source"
+    ],
+    "evaluated_at": "2026-06-29"
+}

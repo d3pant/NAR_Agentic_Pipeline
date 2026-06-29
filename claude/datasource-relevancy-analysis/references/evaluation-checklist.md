@@ -31,12 +31,13 @@ Load this file when performing novelty comparisons or when unsure about scoring.
 
 ## Relevance Scoring Guide
 
-Ask these questions (yes = +1 toward score):
-1. Does it map to a core BioThings entity type (gene, chemical, disease, variant)?
-2. Does it use standard biomedical identifiers (HGNC, ChEMBL, MONDO, dbSNP, etc.)?
-3. Does it provide relationships between BioThings entity types?
+Ask these questions (yes = +2 for 1,2,3;  +1 for 4,5,6):
+1. Does it contain Species level Microbiome data?
+2. Does it provide Phenotype data, If not, does it provide disease data?
+3. Does it contain per sample Demographic data including ALL of: {Age, Gender, BMI, Ethnicity}?
 4. Is it structured/tabular (not just free-text/PDF)?
 5. Is it actively maintained (updated within last 2 years)?
+6. Does it use standard biomedical identifiers (HGNC, ChEMBL, MONDO, dbSNP, etc.)?
 
 ## Novelty Scoring Guide
 

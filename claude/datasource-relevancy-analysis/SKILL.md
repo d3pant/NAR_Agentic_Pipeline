@@ -1,10 +1,10 @@
 ---
 name: datasource-relevancy-analysis
 description: >-
-  Evaluate a biomedical datasource for BioThings ingestion fit. Use when a user
-  provides a datasource name/URL and asks whether it is (1) relevant to the
-  BioThings sphere (MyChem, MyGene, MyDisease, MyVariant, pending.api, etc.),
-  (2) novel vs already-included BioThings data, and (3) openly downloadable
+  Evaluate a biomedical datasource for Demographic-Microbiome ingestion fit. Use when a user
+  provides a datasource name/URL and asks whether it is (1) relevant to 
+  Demographic-Microbiome ingestion, (2) novel vs already-included BioThings data, 
+  and (3) openly downloadable
   without login, paywall, or restrictive license. Produces a structured
   RECOMMEND_INGEST / NEEDS_REVIEW / DO_NOT_INGEST verdict with scored evidence.
   Do not use for general database reviews unrelated to BioThings ingestion.
@@ -33,10 +33,10 @@ Extract all evaluation-relevant information from the resolved paper before proce
 
    **Canonical source preference (MUST follow):** Always check the datasource's own homepage and download page (e.g., `datasource.org/download`) for bulk files BEFORE using URLs from papers, Zenodo, Figshare, Dryad, GitHub releases, or other third-party mirrors. Third-party archives often host stale snapshots (e.g., a Zenodo deposit from 2024 when the datasource has a 2026 release on its own site) and may offer only a subset of files (e.g., a "lite" CSV vs the full download). Record the canonical download URL in `urls.download[]`; only fall back to a mirror if the datasource's own site has no direct bulk download or is access-gated.
 
-2. Assess **BioThings sphere relevance** (score 0–5):
-   - 5: Directly aligned — covers core BioThings entities/relations (drug, chemical, gene, variant, disease, pathway, target, adverse event, clinical evidence).
-   - 3: Biomedical-adjacent but weakly structured for BioThings entity types.
-   - 1: Mostly out of scope.
+2. Assess **Demographic-KG Relevance** (score 0–9):
+   - 9: Directly aligned — Contains all of: Demographic per sample, species level microbiome and phenotypic data. Also is actively mantained and updated.
+   - 7: Missing one of Demographic per sample, species level microbiome and phenotypic data or is missing two of: 1. structures data 2. actively maintained 3.lack of specifiers
+   - <7: Mostly out of scope.
 
 3. Assess **novelty to BioThings APIs** (score 0–5):
    - Compare against known BioThings data sources and endpoints.
@@ -68,9 +68,9 @@ Extract all evaluation-relevant information from the resolved paper before proce
    - If no API is documented, record "No public API found" with the URLs checked.
 
 6. Produce a final **verdict**:
-   - **RECOMMEND_INGEST**: relevance ≥ 4, novelty ≥ 3, openness PASS
+   - **RECOMMEND_INGEST**: relevance ≥ 7, novelty ≥ 3, openness PASS
    - **NEEDS_REVIEW**: mixed scores or uncertainty in any dimension
-   - **DO_NOT_INGEST**: relevance < 3, OR openness FAIL, OR clearly redundant
+   - **DO_NOT_INGEST**: relevance < 7, OR openness FAIL, OR clearly redundant
 
 7. If evidence is missing, explicitly list unknowns — do not guess.
 

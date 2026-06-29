@@ -1,0 +1,68 @@
+{
+    "name": "HumanMetagenomeDB",
+    "verdict": "RECOMMEND_INGEST",
+    "scores": {
+        "relevance": {
+            "score": 8,
+            "justification": "Contains 69,822 human metagenome samples with species-level microbiome data (gut, oral, skin, vagina, lung, etc.), 58 distinct disease/phenotype diagnoses, and per-sample demographic attributes including sex, age, BMI, and ethnicity. Structured in 203 standardized metadata fields with CSV export. Loses 1 point because active maintenance is uncertain (last confirmed release v1.1 June 2020, ~5+ years ago) and disease coding uses free-text diagnoses rather than standard ontology IDs (MONDO, ICD)."
+        },
+        "novelty": {
+            "score": 5,
+            "justification": "No existing BioThings API covers human metagenome sample metadata at this scale or entity type. MyGene/MyChem/MyVariant/MyDisease do not contain metagenome run-level records with linked demographics, phenotypes, geographic origin, and sequencing QC. The 69,822 samples from 580 independent studies with 203 standardized attributes represent a clearly novel entity class (human microbiome sample + demographic + phenotype + sequencing metadata) not yet represented in any BioThings endpoint."
+        },
+        "openness": {
+            "pass": true,
+            "score": 4,
+            "justification": "Published under Creative Commons Attribution License (CC-BY), permitting unrestricted reuse, distribution, and reproduction with attribution. No login required for web interface or CSV export. Python bulk-download script publicly available on GitHub (mdsufz/hmgdb_script) with no API key requirement. Minor limitation: no formal bulk dump URL on the canonical homepage; data accessed via filtered CSV exports or the GitHub downloader script."
+        }
+    },
+    "evidence": {
+        "scope": "Curated, standardized metadata for 69,822 human metagenomes from SRA (95.4%) and MG-RAST. Covers 580 independent studies across 58 countries. Metadata includes 203 attributes spanning host demographics (age, sex, BMI, ethnicity), health/disease (58 diagnoses), sampling site (gut, oral, skin, vagina, lung, bone, biofluids), geographic coordinates, and sequencing QC metrics.",
+        "overlap": "No meaningful overlap with existing BioThings APIs — this is a sample/run-level microbiome metadata resource, not a gene/variant/drug/disease ontology resource. SRA and MG-RAST are data repositories, not BioThings-indexed knowledge graphs.",
+        "entity_types": ["metagenome_sample", "human_microbiome_run"],
+        "identifiers_found": ["SRA Run ID", "SRA Project ID", "BioProject ID", "MG-RAST metagenome ID", "PubMed ID", "Library ID", "Sample ID"],
+        "record_count": 69822,
+        "attribute_count": 203,
+        "study_count": 580,
+        "body_sites": ["gut", "oral", "skin", "vagina", "lung", "bone", "biofluids", "ear"],
+        "diagnoses_count": 58,
+        "geographic_coverage": "58 countries"
+    },
+    "license": {
+        "name": "Creative Commons Attribution License (CC-BY)",
+        "url": "https://creativecommons.org/licenses/by/",
+        "restrictions": ["Attribution required"]
+    },
+    "urls": {
+        "homepage": "https://web.app.ufz.de/hmgdb/",
+        "download": [
+            "https://web.app.ufz.de/hmgdb/",
+            "https://github.com/mdsufz/hmgdb_script"
+        ],
+        "paper_doi": "10.1093/nar/gkaa1031",
+        "pmid": "33221926",
+        "pmc": "PMC7778935"
+    },
+    "api_info": {
+        "exists": false,
+        "base_url": null,
+        "auth_required": false,
+        "rate_limits": "N/A",
+        "pagination": "N/A",
+        "record_coverage": "CSV export via web interface; bulk download via GitHub Python script (mdsufz/hmgdb_script)"
+    },
+    "target_api": "pending.api",
+    "risks": [
+        "Last confirmed release was v1.1 in June 2020 (~6 years ago at eval time); 'twice-yearly update' cadence may have lapsed — verify current maintenance status before ingestion",
+        "No bulk flat-file download on canonical homepage; data acquired via filtered CSV exports or GitHub script, which may not expose the full 203-attribute schema in one download",
+        "Disease/phenotype annotations are free-text diagnoses, not mapped to MONDO/ICD/HPO — normalization step required before BioThings integration",
+        "Aspera protocol in downloader script requires ascp binary and SSH key; standard HTTPS path should be verified as still functional"
+    ],
+    "next_actions": [
+        "Run site inspection to confirm current database version, update date, and bulk CSV download feasibility",
+        "Check whether full 203-attribute metadata is exportable in a single CSV or requires per-study downloads",
+        "Map free-text disease annotations to MONDO/HPO identifiers as part of plugin transformation",
+        "Verify GitHub script (mdsufz/hmgdb_script) still works and covers full dataset"
+    ],
+    "evaluated_at": "2026-06-29"
+}
