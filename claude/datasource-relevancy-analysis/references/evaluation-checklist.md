@@ -32,7 +32,7 @@ Load this file when performing novelty comparisons or when unsure about scoring.
 ## Relevance Scoring Guide
 
 Ask these questions (yes = +2 for 1,2,3;  +1 for 4,5,6):
-1. Does it contain Species level Microbiome data?
+1. Does it contain Species level Microbiome data? Refer to microbiome.md
 2. Does it provide Phenotype data, If not, does it provide disease data?
 3. Does it contain per sample Demographic data including ALL of: {Age, Gender, BMI, Ethnicity}?
 4. Is it structured/tabular (not just free-text/PDF)?

@@ -1,47 +1,46 @@
 {
     "name": "HumanMetagenomeDB",
-    "verdict": "RECOMMEND_INGEST",
+    "verdict": "NEEDS_REVIEW",
     "scores": {
         "relevance": {
-            "score": 8,
-            "justification": "Contains 69,822 human metagenome samples with species-level microbiome data (gut, oral, skin, vagina, lung, etc.), 58 distinct disease/phenotype diagnoses, and per-sample demographic attributes including sex, age, BMI, and ethnicity. Structured in 203 standardized metadata fields with CSV export. Loses 1 point because active maintenance is uncertain (last confirmed release v1.1 June 2020, ~5+ years ago) and disease coding uses free-text diagnoses rather than standard ontology IDs (MONDO, ICD)."
+            "score": 6,
+            "justification": "Contains per-sample demographics for all four required fields (age, sex/gender, BMI, ethnicity) across 69,822 samples, and 58 phenotype/disease diagnoses (+2 each). Data is structured/tabular with 203 standardized CSV-exportable fields (+1). Uses SRA/BioProject/PubMed identifiers and MIMS v5.0 standards (+1). Key gap: the DB itself stores metadata and raw-sequence accessions only — it does NOT contain precomputed species-level taxonomic abundance tables. Species-level microbiome abundance data must be derived from the linked SRA raw reads by the user (score 0 for Q1). Maintenance status uncertain: last versioned release was v1.1 June 2020; site is live but no new version documented (+0 for Q5)."
         },
         "novelty": {
-            "score": 5,
-            "justification": "No existing BioThings API covers human metagenome sample metadata at this scale or entity type. MyGene/MyChem/MyVariant/MyDisease do not contain metagenome run-level records with linked demographics, phenotypes, geographic origin, and sequencing QC. The 69,822 samples from 580 independent studies with 203 standardized attributes represent a clearly novel entity class (human microbiome sample + demographic + phenotype + sequencing metadata) not yet represented in any BioThings endpoint."
+            "score": 4,
+            "justification": "No existing BioThings API covers standardized human metagenome sample-level metadata at this scale (69,822 samples, 203 fields, 58 countries, 9 body sites, 58 diagnoses). DisGeNET/HPO cover disease-gene associations, not metagenome sample metadata. The standardized demographic + phenotype metadata layer (age, BMI, sex, ethnicity, diet, chemical exposure, geographic coordinates) is genuinely novel for BioThings. Slight deduction from 5: the DB is a metadata aggregator over SRA/MG-RAST, which are themselves already indexable, so the value is the curation layer, not raw data novelty."
         },
         "openness": {
             "pass": true,
-            "score": 4,
-            "justification": "Published under Creative Commons Attribution License (CC-BY), permitting unrestricted reuse, distribution, and reproduction with attribution. No login required for web interface or CSV export. Python bulk-download script publicly available on GitHub (mdsufz/hmgdb_script) with no API key requirement. Minor limitation: no formal bulk dump URL on the canonical homepage; data accessed via filtered CSV exports or the GitHub downloader script."
+            "score": 3,
+            "justification": "Published under CC BY 4.0 (Oxford University Press Open Access) — redistribution permitted with attribution. Web application at web.app.ufz.de/hmgdb/ is publicly accessible without login and offers CSV export of filtered metadata. However, no static bulk download URL for the full dataset was found — access is via interactive Shiny app only. The GitHub repo (mdsufz/hmgdb_script) provides a downloader for raw sequences, not the metadata CSV. Cap at 3: open with attribution, but absence of a direct static bulk URL is a minor access barrier for automated ingestion."
         }
     },
     "evidence": {
-        "scope": "Curated, standardized metadata for 69,822 human metagenomes from SRA (95.4%) and MG-RAST. Covers 580 independent studies across 58 countries. Metadata includes 203 attributes spanning host demographics (age, sex, BMI, ethnicity), health/disease (58 diagnoses), sampling site (gut, oral, skin, vagina, lung, bone, biofluids), geographic coordinates, and sequencing QC metrics.",
-        "overlap": "No meaningful overlap with existing BioThings APIs — this is a sample/run-level microbiome metadata resource, not a gene/variant/drug/disease ontology resource. SRA and MG-RAST are data repositories, not BioThings-indexed knowledge graphs.",
-        "entity_types": ["metagenome_sample", "human_microbiome_run"],
-        "identifiers_found": ["SRA Run ID", "SRA Project ID", "BioProject ID", "MG-RAST metagenome ID", "PubMed ID", "Library ID", "Sample ID"],
+        "scope": "Standardized metadata for 69,822 human metagenome samples from 580 independent studies. Covers 58 countries, 9 body sites (gut 63.5%, oral 19%, skin, ear, lung, vagina, bone, biofluids), 58 diagnoses, and 203 metadata attributes per sample. Data aggregated from SRA (95.4%) and MG-RAST (4.6%). Does NOT contain precomputed taxonomic abundance tables — raw sequences must be downloaded separately.",
+        "overlap": "No direct overlap with existing BioThings APIs. SRA accessions are referenced by NCBI but no BioThings API currently indexes standardized metagenome sample-level demographic metadata at this scale.",
+        "entity_types": ["metagenome_sample", "host_demographic", "phenotype", "body_site", "study"],
+        "identifiers_found": ["SRA Run ID", "BioProject ID", "PubMed ID", "MG-RAST ID", "MIMS metagenome v5.0"],
         "record_count": 69822,
-        "attribute_count": 203,
-        "study_count": 580,
-        "body_sites": ["gut", "oral", "skin", "vagina", "lung", "bone", "biofluids", "ear"],
-        "diagnoses_count": 58,
-        "geographic_coverage": "58 countries"
+        "metadata_fields": 203,
+        "body_sites": 9,
+        "diagnoses": 58,
+        "countries": 58,
+        "demographics_available": ["age", "sex", "BMI", "ethnicity", "diet", "antibiotic_use", "geographic_coordinates"]
     },
     "license": {
-        "name": "Creative Commons Attribution License (CC-BY)",
-        "url": "https://creativecommons.org/licenses/by/",
+        "name": "CC BY 4.0",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
         "restrictions": ["Attribution required"]
     },
     "urls": {
         "homepage": "https://web.app.ufz.de/hmgdb/",
-        "download": [
-            "https://web.app.ufz.de/hmgdb/",
-            "https://github.com/mdsufz/hmgdb_script"
-        ],
+        "download": [],
+        "api": "https://web.app.ufz.de/hmgdb/ (Shiny web app — CSV export via UI, no REST API documented)",
         "paper_doi": "10.1093/nar/gkaa1031",
         "pmid": "33221926",
-        "pmc": "PMC7778935"
+        "pmc": "PMC7778935",
+        "github": "https://github.com/mdsufz/hmgdb_script"
     },
     "api_info": {
         "exists": false,
@@ -49,20 +48,21 @@
         "auth_required": false,
         "rate_limits": "N/A",
         "pagination": "N/A",
-        "record_coverage": "CSV export via web interface; bulk download via GitHub Python script (mdsufz/hmgdb_script)"
+        "record_coverage": "Metadata CSV export available via Shiny UI; no programmatic REST/GraphQL API documented. Raw sequence download via hmgdb_downloader.py requires user-provided metadata CSV from the web app."
     },
     "target_api": "pending.api",
     "risks": [
-        "Last confirmed release was v1.1 in June 2020 (~6 years ago at eval time); 'twice-yearly update' cadence may have lapsed — verify current maintenance status before ingestion",
-        "No bulk flat-file download on canonical homepage; data acquired via filtered CSV exports or GitHub script, which may not expose the full 203-attribute schema in one download",
-        "Disease/phenotype annotations are free-text diagnoses, not mapped to MONDO/ICD/HPO — normalization step required before BioThings integration",
-        "Aspera protocol in downloader script requires ascp binary and SSH key; standard HTTPS path should be verified as still functional"
+        "No static bulk download URL — full metadata table must be exported manually through the Shiny web app; blocks automated ingestion pipeline without a scraping step or direct DB access",
+        "Last versioned release was v1.1 (June 2020); maintenance activity post-2020 unverified — dataset may be stale relative to current SRA holdings",
+        "DB stores metadata only, not precomputed taxonomic profiles; species-level microbiome data requires user to download and process raw sequences from SRA/MG-RAST",
+        "Semi-automatic standardization with manual curation bottleneck — update cadence (twice/year) may lag behind SRA submission rates"
     ],
     "next_actions": [
-        "Run site inspection to confirm current database version, update date, and bulk CSV download feasibility",
-        "Check whether full 203-attribute metadata is exportable in a single CSV or requires per-study downloads",
-        "Map free-text disease annotations to MONDO/HPO identifiers as part of plugin transformation",
-        "Verify GitHub script (mdsufz/hmgdb_script) still works and covers full dataset"
+        "Contact HMgDB authors or UFZ team to request a static bulk metadata dump URL or database snapshot (SQL/CSV) for automated ingestion",
+        "Check if a full metadata export is embedded in the Shiny app source or available via the UFZ data repository (data.ufz.de)",
+        "If bulk download confirmed: proceed to site inspection to document exact field names and formats for plugin mapping",
+        "Consider scoping ingestion to metadata only (no raw sequence processing) — demographic + phenotype layer is the BioThings-relevant artifact",
+        "Re-evaluate relevance score if a precomputed species-level abundance table (e.g., from EBI MGnify linked studies) can be co-ingested"
     ],
-    "evaluated_at": "2026-06-29"
+    "evaluated_at": "2026-06-30"
 }
