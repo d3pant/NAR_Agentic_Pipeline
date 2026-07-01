@@ -30,3 +30,6 @@ build/
 # Environment variables
 .env
 .env.local
+
+# BioThings Hub runtime artifacts
+.biothings_hub/
