@@ -1,0 +1,164 @@
+{
+    "name": "prime",
+    "status": "VERIFIED",
+    "inspection_date": "2026-06-30",
+    "download_files": [
+        {
+            "url": "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/genus/absolute",
+            "filename": "silva_genus_absolute.csv",
+            "format": "CSV",
+            "access": "public",
+            "description": "SILVA 138.2 genus-level absolute abundance (read counts) for all 53,449 samples. Rows = samples (SRA Run IDs), columns = full taxonomic lineage strings (d__Domain;p__Phylum;...;g__Genus)."
+        },
+        {
+            "url": "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/species/absolute",
+            "filename": "silva_species_absolute.csv",
+            "format": "CSV",
+            "access": "public",
+            "description": "SILVA 138.2 species-level absolute abundance for all 53,449 samples."
+        },
+        {
+            "url": "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/genus/absolute",
+            "filename": "gg_genus_absolute.csv",
+            "format": "CSV",
+            "access": "public",
+            "description": "Greengenes2 2024.09 genus-level absolute abundance for all 53,449 samples."
+        },
+        {
+            "url": "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/species/absolute",
+            "filename": "gg_species_absolute.csv",
+            "format": "CSV",
+            "access": "public",
+            "description": "Greengenes2 2024.09 species-level absolute abundance for all 53,449 samples."
+        },
+        {
+            "url": "https://primedb.sjtu.edu.cn/api/v1/samples/list",
+            "filename": "sample_ids.json",
+            "format": "JSON",
+            "access": "public",
+            "description": "Complete list of all 53,449 SRA Run IDs — used as enumeration source for metadata API crawl."
+        },
+        {
+            "url": "https://primedb.sjtu.edu.cn/api/v1/metadatas/sample (POST)",
+            "filename": "sample_metadata_batch.json",
+            "format": "JSON (API)",
+            "access": "public",
+            "description": "Batch sample metadata endpoint. POST {runs: [list of run IDs]}. Returns per-sample demographic, phenotypic, geographic, and sequencing metadata. No auth required."
+        }
+    ],
+    "schema": {
+        "fields": [
+            {"name": "Run", "type": "string", "sample": "DRR396973", "classification": "IDENTIFIER"},
+            {"name": "BioProject", "type": "string", "sample": "PRJDB13875", "classification": "IDENTIFIER"},
+            {"name": "BioSample", "type": "string", "sample": "SAMD00518187", "classification": "IDENTIFIER"},
+            {"name": "Experiment", "type": "string", "sample": "DRX382752", "classification": "IDENTIFIER"},
+            {"name": "SRA_Study", "type": "string", "sample": "DRP010964", "classification": "IDENTIFIER"},
+            {"name": "Collection_Date", "type": "string", "sample": "2020-08-05", "classification": "NOVEL"},
+            {"name": "Country", "type": "string", "sample": "Japan", "classification": "NOVEL"},
+            {"name": "Continent", "type": "string", "sample": "Asia", "classification": "NOVEL"},
+            {"name": "Instrument", "type": "string", "sample": "Illumina MiSeq", "classification": "NOVEL"},
+            {"name": "Systems", "type": "string", "sample": "Digestive System/Gut", "classification": "NOVEL"},
+            {"name": "Body_Site", "type": "string", "sample": "Stool/feces", "classification": "NOVEL"},
+            {"name": "Phenotype", "type": "string", "sample": "Healthy", "classification": "NOVEL"},
+            {"name": "Library_Layout", "type": "string", "sample": "Paired", "classification": "NOVEL"},
+            {"name": "Variable_Region", "type": "string", "sample": "V1-V2", "classification": "NOVEL"},
+            {"name": "Sequencing_Type", "type": "string", "sample": "2×300", "classification": "NOVEL"},
+            {"name": "Time_series", "type": "string", "sample": "no", "classification": "NOVEL"},
+            {"name": "Comparison", "type": "string", "sample": "yes", "classification": "NOVEL"},
+            {"name": "Matched", "type": "string", "sample": "no", "classification": "NOVEL"},
+            {"name": "Study_Group", "type": "string", "sample": "Control", "classification": "NOVEL"},
+            {"name": "Participant_Id", "type": "string", "sample": "NCNP001", "classification": "NOVEL"},
+            {"name": "Host_Age", "type": "string", "sample": "30-39", "classification": "NOVEL"},
+            {"name": "Host_Sex", "type": "string", "sample": "Female", "classification": "NOVEL"},
+            {"name": "Host_BMI", "type": "float", "sample": "22.5", "classification": "NOVEL"},
+            {"name": "Race_or_Ethnicity", "type": "string", "sample": "Hispanic", "classification": "NOVEL"},
+            {"name": "Host_Birth_Year", "type": "integer", "sample": "1989", "classification": "NOVEL"},
+            {"name": "Host_Country_Birth", "type": "string", "sample": "Mexico", "classification": "NOVEL"},
+            {"name": "Smoke_Status", "type": "string", "sample": "no", "classification": "NOVEL"},
+            {"name": "Drinking_Status", "type": "string", "sample": "no", "classification": "NOVEL"},
+            {"name": "Diet_Type", "type": "string", "sample": "Omnivore", "classification": "NOVEL"},
+            {"name": "Probiotic_Frequency", "type": "string", "sample": "Occasionally (1-2 times/week)", "classification": "NOVEL"},
+            {"name": "Sleep_Duration", "type": "string", "sample": "6-7 hours", "classification": "NOVEL"},
+            {"name": "Antibiotics_Use", "type": "string", "sample": "yes", "classification": "NOVEL"},
+            {"name": "Antibiotic_Status", "type": "string", "sample": "6 months", "classification": "NOVEL"},
+            {"name": "Sequencing_Quality", "type": "string", "sample": "Good", "classification": "NOVEL"},
+            {"name": "Filter_Pass", "type": "string", "sample": "Excellent", "classification": "NOVEL"},
+            {"name": "Doi", "type": "string", "sample": "10.1128/msystems.00031-18", "classification": "NOVEL"},
+            {"name": "abundance_columns (silva genus)", "type": "float", "sample": "d__Bacteria;p__Firmicutes;...;g__Lachnospiraceae_NK4A136_group → 1432", "classification": "NOVEL"}
+        ],
+        "primary_key": {
+            "field": "Run",
+            "type": "SRA Run Accession (DRR/ERR/SRR)",
+            "sample": "DRR396973",
+            "note": "Used as _id in pending.api. Globally unique across all NCBI SRA."
+        },
+        "identifiers": [
+            {"type": "SRA Run", "field": "Run", "sample": "DRR396973"},
+            {"type": "BioProject", "field": "BioProject", "sample": "PRJDB13875"},
+            {"type": "BioSample", "field": "BioSample", "sample": "SAMD00518187"}
+        ]
+    },
+    "license": {
+        "stated_paper": "Open access, freely available at https://primedb.sjtu.edu.cn",
+        "observed_site": "No login required, API confirms 'No authentication required'",
+        "match": true,
+        "restrictions": ["No explicit named license (CC/MIT) — open access is confirmed but formal redistribution license is not stated"]
+    },
+    "plugin_inputs": {
+        "data_url": [
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/genus/absolute",
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/species/absolute",
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/genus/absolute",
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/species/absolute"
+        ],
+        "primary_key_field": "Run",
+        "target_api": "pending.api",
+        "ingestion_path": "hybrid",
+        "novel_fields": [
+            "abundance_silva_genus", "abundance_silva_species",
+            "abundance_gg_genus", "abundance_gg_species",
+            "phenotype", "body_site", "system",
+            "host_age", "host_sex", "host_bmi", "race_or_ethnicity",
+            "country", "continent", "host_birth_year", "host_country_birth",
+            "smoke_status", "drinking_status", "diet_type", "sleep_duration",
+            "probiotic_frequency", "antibiotics_use", "antibiotic_status",
+            "variable_region", "sequencing_type", "library_layout",
+            "time_series", "comparison", "matched", "study_group",
+            "sequencing_quality", "filter_pass", "collection_date", "doi"
+        ],
+        "redundant_fields": []
+    },
+    "api_crawl_details": {
+        "base_url": "https://primedb.sjtu.edu.cn/api/v1",
+        "endpoints": [
+            "GET /api/v1/samples/list → enumerate all 53,449 SRA Run IDs",
+            "POST /api/v1/metadatas/sample (body: {runs: [batch of IDs]}) → fetch metadata per batch",
+            "GET /api/v1/abundances/cache/silva/genus/absolute → bulk CSV download",
+            "GET /api/v1/abundances/cache/silva/species/absolute → bulk CSV download",
+            "GET /api/v1/abundances/cache/gg/genus/absolute → bulk CSV download",
+            "GET /api/v1/abundances/cache/gg/species/absolute → bulk CSV download"
+        ],
+        "pagination": "samples/list returns full array of 53,449 IDs at once; metadata batch POST accepts any number of IDs (recommend batches of 100-500)",
+        "total_records": 53449,
+        "rate_limits": "none (API explicitly states no rate limiting)",
+        "auth": "none",
+        "response_shape": "{success: true, data: [{Run: ..., Phenotype: ..., ...}]}",
+        "sample_curl": "curl -s https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/genus/absolute -o silva_genus_absolute.csv"
+    },
+    "paper_vs_reality": [
+        {"claim": "53,449 samples", "observed": "53,449 confirmed via /api/v1/stats and /api/v1/samples/list", "match": true},
+        {"claim": "111 studies", "observed": "111 confirmed via /api/v1/stats totalProjects", "match": true},
+        {"claim": "93 body sites", "observed": "93 confirmed via /api/v1/stats totalBodySites", "match": true},
+        {"claim": "101 phenotypic categories", "observed": "101 confirmed via /api/v1/stats totalPhenotypes", "match": true},
+        {"claim": "SILVA 138.2 and Greengenes2 2024.09", "observed": "Both databases available via abundance cache endpoints", "match": true},
+        {"claim": "No login required", "observed": "All endpoints return 200 with no auth header", "match": true},
+        {"claim": "REST API v1", "observed": "Live at https://primedb.sjtu.edu.cn/api/v1", "match": true},
+        {"claim": "Phylum to species taxonomic levels", "observed": "Endpoints exist for phylum, class, order, family, genus, species", "match": true}
+    ],
+    "risks": [
+        "Metadata requires API crawl (no flat-file dump) — plugin will iterate sample IDs in batches via POST /metadatas/sample",
+        "Abundance CSV columns use full taxonomic lineage strings (e.g., 'd__Bacteria;p__Firmicutes;...;g__Lachnospiraceae') — parser must handle these as column keys",
+        "SILVA genus CSV has 4,594 columns (taxa) — abundance tables are wide, memory-efficient parsing required",
+        "No explicit named license — redistribution terms should be disclosed in manifest __metadata__"
+    ]
+}

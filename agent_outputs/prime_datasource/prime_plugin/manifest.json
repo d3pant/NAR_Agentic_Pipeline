@@ -1,0 +1,26 @@
+{
+    "version": "1.0",
+    "requires": ["pandas", "requests"],
+    "__metadata__": {
+        "name": "PRIME",
+        "description": "Curated human 16S rRNA microbiome database with 53,449 samples, harmonized demographic/phenotypic metadata, and species-level taxonomic abundance tables (SILVA 138.2 and Greengenes2 2024.09).",
+        "license": "Open Access (no login required; see https://primedb.sjtu.edu.cn)",
+        "license_url": "https://primedb.sjtu.edu.cn",
+        "url": "https://primedb.sjtu.edu.cn"
+    },
+    "dumper": {
+        "data_url": [
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/genus/absolute",
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/species/absolute",
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/genus/absolute",
+            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/species/absolute"
+        ],
+        "uncompress": false,
+        "release": "version:get_release",
+        "dumper": "dumper:PRIMEDumper"
+    },
+    "uploader": {
+        "parser": "parser:load_data",
+        "on_duplicates": "error"
+    }
+}

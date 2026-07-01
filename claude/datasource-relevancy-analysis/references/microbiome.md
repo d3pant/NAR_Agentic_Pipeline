@@ -22,6 +22,10 @@ If both locations have it, use the more recent or more complete deposit and note
    - Species level: **+2**
    - Genus or phylum level: **+1**
    - No abundance data or taxonomic annotation: **+0**
+**HIGHLY IMPORTANT — read before selecting files:**
+1. **Database preference**: Use SILVA (newer, well-maintained). Fall back to Greengenes only if SILVA is absent.
+2. **Abundance type preference**: Prefer both absolute and relative abundance. If only one is available, prefer absolute over relative.
+3. **File selection rule**: Only download the minimum necessary files in this priority order: **Metadata → Absolute SILVA abundance → Relative SILVA abundance**. Nothing beyond these three. Example: if a deposit has metadata + SILVA (absolute + relative) + Greengenes (absolute + relative), download only Metadata, Absolute SILVA, and Relative SILVA.
 4. Check license once for the whole deposit → feeds openness score.
 
 ---

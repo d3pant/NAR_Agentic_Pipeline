@@ -84,7 +84,9 @@ curl -skL -A "Mozilla/5.0" "<URL>" | head -3
 **If no direct-file URL can be found:** Stop and flag as `BLOCKED`. Do NOT generate a plugin with a placeholder URL.
 
 ### 1c. Ingestion Strategy — Manifest-First (Bulk Download)
-The default — and currently the **only** — supported ingestion strategy is **bulk download via the manifest**. Every generated plugin must declare its data via `dumper.data_url`.
+The default — and currently the **only** — supported ingestion strategy is **bulk download via the manifest**. 
+If the API endpoint returns CSV (or TAR) files directly for bulk download, treat it as above and do not create a manual dumper.
+Every generated plugin must declare its data via `dumper.data_url`.
 
 **Decision tree:**
 - Bulk CSV/TSV/JSON/SDF download available → use `dumper.data_url` (default path)

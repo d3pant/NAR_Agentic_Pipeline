@@ -1,16 +1,26 @@
 {
     "datasources": {
         "prime": {
-            "stage": "relevancy_complete",
+            "stage": "inspected",
             "verdict": "RECOMMEND_INGEST",
+            "inspection_status": "VERIFIED",
             "scores": {
                 "relevance": 9,
                 "novelty": 5,
                 "openness_pass": true,
-                "openness_score": 4
+                "openness_score": 5
             },
+            "data_url": [
+                "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/genus/absolute",
+                "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/species/absolute",
+                "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/genus/absolute",
+                "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/species/absolute"
+            ],
+            "target_api": "pending.api",
             "eval_date": "2026-06-30",
-            "output_file": "agent_outputs/prime_datasource/prime_relevancy.json"
+            "inspection_date": "2026-06-30",
+            "output_file": "agent_outputs/prime_datasource/prime_relevancy.json",
+            "inspection_file": "agent_outputs/prime_datasource/prime_inspection.json"
         },
         "humanmetagenomedb": {
             "stage": "relevancy_complete",
