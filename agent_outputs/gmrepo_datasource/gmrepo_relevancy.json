@@ -1,0 +1,90 @@
+{
+    "name": "gmrepo",
+    "verdict": "RECOMMEND_INGEST",
+    "scores": {
+        "relevance": {
+            "score": 9,
+            "justification": "GMrepo v3 is a near-perfect match for Demographic-Microbiome ingestion. It provides: (1) species-level microbiome abundance data from both 16S rRNA and WGS pipelines (726 species, 573 genera via SILVA 138 / MetaPhlAn4), (2) phenotype/disease data for 302 distinct phenotypes using standardized MeSH terminology, (3) per-sample demographic metadata including age, gender, BMI, and geography. The database is actively maintained (v3 published NAR 2026, D1 issue) with 118,965 samples across 890 projects. Data is structured/tabular (TSV bulk downloads, SQL dump). Standard identifiers used: NCBI Taxonomy IDs, MeSH terms. Minor deduction: only ~30% of samples have gender annotation, and ethnicity is not explicitly captured as a field."
+        },
+        "novelty": {
+            "score": 5,
+            "justification": "GMrepo v3 is not currently in any BioThings API. It represents a distinct, curated entity type (human gut microbiome runs linked to phenotypes and demographics) not covered by MyGene, MyDisease, MyChem, or MyVariant. Key novel contributions: (1) 118,965 curated and QC-passed samples with processed abundance profiles, (2) 1,299 cross-dataset microbial biomarkers (726 species, 573 genera) validated across 167 phenotype pairs, (3) co-occurrence data by phenotype, (4) cross-dataset meta-analysis results. HumanMetagenomeDB (already evaluated, NEEDS_REVIEW) has overlapping raw-data scope but GMrepo adds curated QC, re-processed abundances, and biomarker analysis on top."
+        },
+        "openness": {
+            "pass": true,
+            "score": 4,
+            "justification": "All bulk data files are publicly downloadable via direct URL at https://gmrepo.humangut.info/Downloads/SQLDumps/ — confirmed by successful binary download of projects.txt.gz with no login redirect. Includes full SQL dump, per-sample metadata, species abundance TSVs, and co-occurrence tables. RESTful API also available (no auth required per documentation). License is Creative Commons Attribution Non-Commercial (CC-BY-NC), which is compatible with BioThings ingestion at Scripps Research (non-profit/academic). Minor risk: downstream commercial API consumers could conflict with NC clause."
+        }
+    },
+    "evidence": {
+        "scope": "Human gut microbiome samples with per-sample demographics (age, gender, BMI) and disease phenotypes (302 phenotypes via MeSH). Abundance profiles at species and genus levels. Cross-dataset microbial biomarker associations. Run-level QC status. Taxon co-occurrence by phenotype.",
+        "overlap": "Partially overlaps with HumanMetagenomeDB in raw sample scope, but GMrepo v3 uniquely provides: re-processed and QC-filtered abundance profiles, standardized MeSH phenotype annotations, and cross-dataset biomarker analysis results. No overlap with any current BioThings API source.",
+        "entity_types": ["microbiome_sample", "microbial_taxon", "phenotype", "project_run"],
+        "identifiers_found": ["NCBI Taxonomy ID", "MeSH ID", "SRA run accession", "SRA project accession"],
+        "record_count": 118965,
+        "qc_passed_count": 68723,
+        "species_count": 726,
+        "genus_count": 573,
+        "phenotype_count": 302,
+        "biomarker_count": 1299,
+        "sequencing_types": ["16S rRNA amplicon", "WGS metagenomics"],
+        "taxonomy_pipelines": ["QIIME2 + SILVA 138 (16S)", "MetaPhlAn4 (WGS)"],
+        "demographic_fields_present": ["age", "gender", "BMI", "geography"],
+        "demographic_coverage_note": "~30% of samples have gender annotation; ethnicity not a captured field"
+    },
+    "license": {
+        "name": "CC BY-NC",
+        "url": "https://creativecommons.org/licenses/by-nc/",
+        "restrictions": [
+            "Non-commercial use only",
+            "Commercial use requires contacting journals.permissions@oup.com"
+        ]
+    },
+    "urls": {
+        "homepage": "https://gmrepo.humangut.info",
+        "download": [
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/projects.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/projects_summary.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/sample_to_run_info.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/sample_to_disease_info.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/samples_loaded.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance_summary.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/species_cooccurence.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/stats_by_phenotype.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/gmrepo.sql.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/mesh_data.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/superkingdom2descendents.txt.gz"
+        ],
+        "api": "https://gmrepo.humangut.info",
+        "api_docs": "https://evolgeniusteam.github.io/gmrepodocumentation/",
+        "api_github": "https://github.com/evolgeniusteam/GMrepoProgrammableAccess",
+        "paper_doi": "10.1093/nar/gkaf1190",
+        "pmid": "41277537",
+        "pmc": "PMC12807640",
+        "oup_article": "https://academic.oup.com/nar/article/54/D1/D734/8340991"
+    },
+    "api_info": {
+        "exists": true,
+        "base_url": "https://gmrepo.humangut.info",
+        "auth_required": false,
+        "rate_limits": "unknown",
+        "pagination": "unknown",
+        "record_coverage": "most database contents per documentation",
+        "notes": "RESTful API with example code in R, Perl, and Python via GitHub. Graphical query builder also available on site. API likely query-access only; bulk download preferred for full ingestion."
+    },
+    "target_api": "pending.api",
+    "risks": [
+        "CC-BY-NC license: downstream commercial consumers of BioThings APIs may technically violate the NC clause — recommend confirming acceptable use with Chen lab maintainers",
+        "~30% gender annotation rate means demographic completeness is partial across samples",
+        "Ethnicity not a captured metadata field — limits full demographic-KG alignment",
+        "species_abundance.txt.gz may be large; confirm file size before ingestion planning",
+        "v2 still live at gmrepo2022.humangut.info — ensure plugin targets v3 endpoint canonical URLs"
+    ],
+    "next_actions": [
+        "Run site inspection to verify all download URLs and file sizes",
+        "Confirm CC-BY-NC is acceptable for BioThings API redistribution with legal/maintainers",
+        "Proceed to plugin generation targeting species_abundance.txt.gz + sample_to_run_info.txt.gz + sample_to_disease_info.txt.gz as core files"
+    ],
+    "evaluated_at": "2026-07-01"
+}

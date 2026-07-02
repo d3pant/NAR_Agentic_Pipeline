@@ -22,6 +22,31 @@
             "output_file": "agent_outputs/prime_datasource/prime_relevancy.json",
             "inspection_file": "agent_outputs/prime_datasource/prime_inspection.json"
         },
+        "gmrepo": {
+            "stage": "inspected",
+            "verdict": "RECOMMEND_INGEST",
+            "inspection_status": "VERIFIED",
+            "scores": {
+                "relevance": 9,
+                "novelty": 5,
+                "openness_pass": true,
+                "openness_score": 4
+            },
+            "data_url": [
+                "https://gmrepo.humangut.info/Downloads/SQLDumps/sample_to_run_info.txt.gz",
+                "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance.txt.gz",
+                "https://gmrepo.humangut.info/Downloads/SQLDumps/samples_loaded.txt.gz",
+                "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance_summary.txt.gz",
+                "https://gmrepo.humangut.info/Downloads/SQLDumps/stats_by_phenotype.txt.gz",
+                "https://gmrepo.humangut.info/Downloads/SQLDumps/mesh_data.txt.gz",
+                "https://gmrepo.humangut.info/Downloads/SQLDumps/superkingdom2descendents.txt.gz"
+            ],
+            "target_api": "pending.api",
+            "eval_date": "2026-07-01",
+            "inspection_date": "2026-07-01",
+            "output_file": "agent_outputs/gmrepo_datasource/gmrepo_relevancy.json",
+            "inspection_file": "agent_outputs/gmrepo_datasource/gmrepo_inspection.json"
+        },
         "humanmetagenomedb": {
             "stage": "relevancy_complete",
             "verdict": "NEEDS_REVIEW",

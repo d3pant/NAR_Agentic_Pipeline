@@ -197,6 +197,7 @@ Rules for parser.py:
 - **pending.api**: Most specific unique ID available. Composite IDs like `f"{id1}-{id2}"` are acceptable.
 
 ### 5. Structure Output Documents
+- Refer to references/output_json_structure.md
 - Top-level: `_id` + one key per datasource
 - Group related fields into sub-objects
 - Use lists for one-to-many relationships

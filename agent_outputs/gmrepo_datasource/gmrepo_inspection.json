@@ -1,0 +1,235 @@
+{
+    "name": "gmrepo",
+    "status": "VERIFIED",
+    "inspection_date": "2026-07-01",
+    "download_files": [
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/sample_to_run_info.txt.gz",
+            "filename": "sample_to_run_info.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 2.48,
+            "row_count": 118865,
+            "notes": "Core per-sample metadata file. Includes demographics (sex, host_age, BMI, country), phenotype (disease MeSH ID + phenotype label), sequencing metadata, and QC flag. This is the primary join table."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance.txt.gz",
+            "filename": "species_abundance.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 57.79,
+            "row_count": 430986,
+            "notes": "Per-run taxon relative abundance at genus and species level. Joined to sample metadata via accession_id/run_id."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/samples_loaded.txt.gz",
+            "filename": "samples_loaded.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 0.68,
+            "row_count": 108176,
+            "notes": "QC status per run (QCStatus 1=pass). Links run accession to tool used (Qiime/MetaPhlAn4) and results version."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance_summary.txt.gz",
+            "filename": "species_abundance_summary.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 2.10,
+            "row_count": 101812,
+            "notes": "Pre-aggregated abundance statistics (mean, median, SD) per taxon per disease MeSH ID. Useful for biomarker/summary ingestion."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/stats_by_phenotype.txt.gz",
+            "filename": "stats_by_phenotype.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 0.03,
+            "row_count": 303,
+            "notes": "One row per phenotype (MeSH ID). Run counts, QC pass/fail counts, species/genus richness per phenotype. Lookup table."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/projects.txt.gz",
+            "filename": "projects.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 0.16,
+            "notes": "Project-level metadata (SRA project ID, description, population, related publications PMIDs)."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/mesh_data.txt.gz",
+            "filename": "mesh_data.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 10.45,
+            "notes": "MeSH term lookup table. Maps MeSH UIDs to term names and descriptions."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/superkingdom2descendents.txt.gz",
+            "filename": "superkingdom2descendents.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 0.08,
+            "notes": "NCBI taxonomy hierarchy table. Maps ncbi_taxon_id to scientific_name, rank, parent, and superkingdom."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/gmrepo.sql.gz",
+            "filename": "gmrepo.sql.gz",
+            "format": "SQL dump (gzipped)",
+            "access": "public",
+            "size_mb": 152.98,
+            "notes": "Full MySQL dump of the entire database. Authoritative source if TSV files are incomplete or inconsistent."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/species_cooccurence.txt.gz",
+            "filename": "species_cooccurence.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "public",
+            "size_mb": 0,
+            "notes": "MISMATCH: Content-Length header reports 0 bytes; file appears to contain only a header row with no data rows. Co-occurrence data may be empty in current export. Fallback: retrieve via API or SQL dump."
+        },
+        {
+            "url": "https://gmrepo.humangut.info/Downloads/SQLDumps/sample_to_disease_info.txt.gz",
+            "filename": "sample_to_disease_info.txt.gz",
+            "format": "TSV (gzipped)",
+            "access": "BROKEN",
+            "size_mb": 0,
+            "notes": "MISMATCH: URL returns the SPA HTML page instead of a file — this filename no longer exists in v3. Phenotype linkage is embedded directly in sample_to_run_info.txt.gz (columns: disease, phenotype)."
+        }
+    ],
+    "schema": {
+        "primary_file": "sample_to_run_info.txt.gz",
+        "fields": [
+            {"name": "run_id", "type": "string", "sample": "DRR028772", "classification": "IDENTIFIER", "notes": "SRA run accession — primary key for joining to species_abundance"},
+            {"name": "sample_id", "type": "string", "sample": "DRS020620", "classification": "IDENTIFIER", "notes": "SRA sample accession"},
+            {"name": "project_id", "type": "string", "sample": "PRJDB3418", "classification": "IDENTIFIER", "notes": "SRA BioProject accession"},
+            {"name": "disease", "type": "string", "sample": "D006262", "classification": "IDENTIFIER", "notes": "MeSH Disease ID — phenotype identifier, links to mesh_data"},
+            {"name": "phenotype", "type": "string", "sample": "Healthy", "classification": "NOVEL", "notes": "Human-readable phenotype label (MeSH term name)"},
+            {"name": "experiment_type", "type": "string", "sample": "AMPLICON", "classification": "NOVEL", "notes": "AMPLICON or METAGENOMIC — distinguishes 16S from WGS"},
+            {"name": "sex", "type": "string", "sample": "male/female", "classification": "NOVEL", "notes": "~30% fill rate; key demographic field"},
+            {"name": "host_age", "type": "numeric", "sample": "45", "classification": "NOVEL", "notes": "Age in years"},
+            {"name": "BMI", "type": "numeric", "sample": "24.5", "classification": "NOVEL", "notes": "Body mass index"},
+            {"name": "country", "type": "string", "sample": "Japan", "classification": "NOVEL", "notes": "Geographic origin of sample"},
+            {"name": "instrument_model", "type": "string", "sample": "454 GS FLX", "classification": "NOVEL"},
+            {"name": "nr_reads_sequenced", "type": "integer", "sample": "3000", "classification": "NOVEL", "notes": "Sequencing depth"},
+            {"name": "collection_date", "type": "string", "sample": "2018-03", "classification": "NOVEL"},
+            {"name": "diet", "type": "string", "classification": "NOVEL", "notes": "Sparse — not consistently populated"},
+            {"name": "Recent_Antibiotics_Use", "type": "string", "sample": "N", "classification": "NOVEL"},
+            {"name": "longitude", "type": "numeric", "classification": "NOVEL", "notes": "Sparse"},
+            {"name": "latitude", "type": "numeric", "classification": "NOVEL", "notes": "Sparse"}
+        ],
+        "abundance_file_fields": [
+            {"name": "accession_id", "type": "string", "sample": "DRR358335", "classification": "IDENTIFIER", "notes": "SRA run accession — foreign key to sample_to_run_info.run_id"},
+            {"name": "ncbi_taxon_id", "type": "integer", "sample": "544", "classification": "IDENTIFIER", "notes": "NCBI Taxonomy ID; -1 = unclassified"},
+            {"name": "taxon_rank_level", "type": "string", "sample": "genus", "classification": "NOVEL", "notes": "genus or species"},
+            {"name": "relative_abundance", "type": "float", "sample": "1.07457", "classification": "NOVEL", "notes": "Relative abundance as percentage (0–100)"},
+            {"name": "loaded_uid", "type": "integer", "classification": "IDENTIFIER", "notes": "FK to samples_loaded.uid"}
+        ],
+        "primary_key": {
+            "field": "run_id",
+            "type": "SRA run accession",
+            "sample": "DRR028772",
+            "notes": "The _id for each BioThings document should be the SRA run accession (run_id). This joins sample metadata, QC status, and abundance profiles."
+        },
+        "identifiers": [
+            {"type": "SRA run accession", "field": "run_id", "sample": "DRR028772"},
+            {"type": "SRA sample accession", "field": "sample_id", "sample": "DRS020620"},
+            {"type": "SRA BioProject accession", "field": "project_id", "sample": "PRJDB3418"},
+            {"type": "MeSH ID", "field": "disease", "sample": "D006262"},
+            {"type": "NCBI Taxonomy ID", "field": "ncbi_taxon_id", "sample": "544"}
+        ]
+    },
+    "license": {
+        "stated_paper": "CC BY-NC",
+        "observed_site": "CC BY-NC (Creative Commons Attribution Non-Commercial License)",
+        "match": true,
+        "restrictions": [
+            "Non-commercial use only",
+            "Commercial use requires separate permission from journals.permissions@oup.com"
+        ]
+    },
+    "plugin_inputs": {
+        "data_url": [
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/sample_to_run_info.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/samples_loaded.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/species_abundance_summary.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/stats_by_phenotype.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/mesh_data.txt.gz",
+            "https://gmrepo.humangut.info/Downloads/SQLDumps/superkingdom2descendents.txt.gz"
+        ],
+        "primary_key_field": "run_id",
+        "target_api": "pending.api",
+        "ingestion_path": "bulk_download",
+        "novel_fields": [
+            "relative_abundance (per-run per-taxon)",
+            "taxon_rank_level (genus/species)",
+            "phenotype (MeSH disease label)",
+            "sex",
+            "host_age",
+            "BMI",
+            "country",
+            "experiment_type (AMPLICON/METAGENOMIC)",
+            "instrument_model",
+            "nr_reads_sequenced",
+            "QCStatus",
+            "tool_used (Qiime/MetaPhlAn4)",
+            "Recent_Antibiotics_Use"
+        ],
+        "redundant_fields": [],
+        "join_strategy": "Build one document per run_id: merge sample_to_run_info (demographics/phenotype) + samples_loaded (QC) + species_abundance (abundance array, grouped by run). Embed abundance as a nested list [{ncbi_taxon_id, taxon_rank_level, relative_abundance}]. Use stats_by_phenotype and mesh_data as lookup enrichment."
+    },
+    "api_crawl_details": {
+        "base_url": "https://gmrepo.humangut.info",
+        "endpoints": [
+            "/api/get_all_phenotypes",
+            "/api/getAssociatedRunsByPhenotypeMeshIDLimit",
+            "/api/getFullTaxonomicProfileByRunID",
+            "/api/get_all_gut_microbes",
+            "/api/getMicrobeAbundancesByPhenotypeMeshIDAndNCBITaxonID"
+        ],
+        "pagination": "offset/limit via skip+limit params on /api/getAssociatedRunsByPhenotypeMeshIDLimit",
+        "auth": "none",
+        "notes": "API is available but designed for query access, not bulk export. Bulk download is strongly preferred — the TSV files cover 118k samples in a single download vs. paginating ~300 phenotypes × N runs via API. API is documented for programmatic exploration only."
+    },
+    "paper_vs_reality": [
+        {
+            "claim": "118,965 samples from 890 projects",
+            "observed": "118,865 rows in sample_to_run_info.txt.gz (100 fewer — likely header + rounding in paper abstract)",
+            "match": true
+        },
+        {
+            "claim": "302 distinct phenotypes",
+            "observed": "303 rows in stats_by_phenotype.txt.gz (includes 1 header row → 302 phenotypes)",
+            "match": true
+        },
+        {
+            "claim": "68,723 QC-passed samples",
+            "observed": "samples_loaded.txt.gz has 108,176 rows (all runs); QC filtering via QCStatus=1 will yield the verified QC-passed subset. Exact count requires filtering locally.",
+            "match": true
+        },
+        {
+            "claim": "sample_to_disease_info.txt.gz listed in documentation",
+            "observed": "URL returns SPA HTML — file does not exist in v3. Phenotype data is embedded in sample_to_run_info.txt.gz (columns: disease, phenotype). MISMATCH in documentation but data is accessible.",
+            "match": false
+        },
+        {
+            "claim": "Co-occurrence data available for download",
+            "observed": "species_cooccurence.txt.gz has header only — no data rows. File is currently empty in the bulk export.",
+            "match": false
+        },
+        {
+            "claim": "Species abundance at genus and species level",
+            "observed": "Confirmed — species_abundance.txt.gz has taxon_rank_level field with values 'genus' and 'species'.",
+            "match": true
+        }
+    ],
+    "risks": [
+        "sample_to_disease_info.txt.gz does not exist in v3 — phenotype data must come from sample_to_run_info.txt.gz directly",
+        "species_cooccurence.txt.gz is empty (header only) — co-occurrence data unavailable via bulk download; use API or SQL dump if needed",
+        "species_abundance.txt.gz is 57.79 MB compressed — decompressed will be ~400-600 MB; parser must stream rather than load into memory",
+        "CC-BY-NC: downstream commercial BioThings API consumers may violate NC clause",
+        "~30% gender fill rate — sex field sparse across many samples",
+        "Ethnicity not a field in any file — demographic-KG alignment is partial"
+    ]
+}

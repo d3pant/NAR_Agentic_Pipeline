@@ -33,3 +33,6 @@ build/
 
 # BioThings Hub runtime artifacts
 .biothings_hub/
+
+# Large raw data files
+EDA/raw_data/silva_species_absolute.csv
