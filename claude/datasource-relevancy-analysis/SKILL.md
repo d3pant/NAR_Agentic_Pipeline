@@ -30,6 +30,7 @@ Extract all evaluation-relevant information from the resolved paper before proce
    - homepage / documentation URL
    - download or API URL(s)
    - stated license / terms of use
+   - Database curation strategy: Manual or Automated
 
    **Canonical source preference (MUST follow):** Always check the datasource's own homepage and download page (e.g., `datasource.org/download`) for bulk files BEFORE using URLs from papers, Zenodo, Figshare, Dryad, GitHub releases, or other third-party mirrors. Third-party archives often host stale snapshots (e.g., a Zenodo deposit from 2024 when the datasource has a 2026 release on its own site) and may offer only a subset of files (e.g., a "lite" CSV vs the full download). Record the canonical download URL in `urls.download[]`; only fall back to a mirror if the datasource's own site has no direct bulk download or is access-gated.
 
