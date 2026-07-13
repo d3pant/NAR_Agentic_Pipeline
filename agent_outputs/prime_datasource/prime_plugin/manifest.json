@@ -1,23 +1,22 @@
 {
     "version": "1.0",
-    "requires": ["pandas", "requests"],
+    "requires": ["pandas", "requests", "biothings_client"],
     "__metadata__": {
-        "name": "PRIME",
-        "description": "Curated human 16S rRNA microbiome database with 53,449 samples, harmonized demographic/phenotypic metadata, and species-level taxonomic abundance tables (SILVA 138.2 and Greengenes2 2024.09).",
-        "license": "Open Access (no login required; see https://primedb.sjtu.edu.cn)",
-        "license_url": "https://primedb.sjtu.edu.cn",
+        "name": "PRIME (Phenotypic Reference for Integrated Microbiome Enrichment)",
+        "description": "Human 16S rRNA microbiome abundance data for 53,449 samples from 111 studies, with per-sample host demographics, phenotype associations, and body site metadata.",
+        "license": "CC BY 4.0",
+        "license_url": "https://creativecommons.org/licenses/by/4.0/",
         "url": "https://primedb.sjtu.edu.cn"
     },
     "dumper": {
         "data_url": [
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/genus/absolute",
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/species/absolute",
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/genus/absolute",
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/species/absolute"
+            "https://zenodo.org/records/15711237/files/samples_metadata.csv?download=1",
+            "https://zenodo.org/records/15711237/files/silva_species_absolute.csv?download=1",
+            "https://zenodo.org/records/15711237/files/silva_species_relative.csv?download=1",
+            "https://zenodo.org/records/15711237/files/projects_metadata.csv?download=1"
         ],
         "uncompress": false,
-        "release": "version:get_release",
-        "dumper": "dumper:PRIMEDumper"
+        "release": "version:get_release"
     },
     "uploader": {
         "parser": "parser:load_data",

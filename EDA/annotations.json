@@ -1,0 +1,182 @@
+[
+  {
+    "input_text": "microcephaly",
+    "label": "phenotype",
+    "matched_text": "MICROCEPHALY",
+    "curie": "HP:0000252",
+    "uri": "http://purl.obolibrary.org/obo/HP_0000252",
+    "ontology": "HP",
+    "pref_label": null
+  },
+  {
+    "input_text": "cleft palate",
+    "label": "phenotype",
+    "matched_text": "CLEFT PALATE",
+    "curie": "HP:0000175",
+    "uri": "http://purl.obolibrary.org/obo/HP_0000175",
+    "ontology": "HP",
+    "pref_label": null
+  },
+  {
+    "input_text": "short stature",
+    "label": "phenotype",
+    "matched_text": "SHORT STATURE",
+    "curie": "HP:0004322",
+    "uri": "http://purl.obolibrary.org/obo/HP_0004322",
+    "ontology": "HP",
+    "pref_label": null
+  },
+  {
+    "input_text": "Escherichia coli",
+    "label": "taxon",
+    "matched_text": "ESCHERICHIA COLI",
+    "curie": "NCBITAXON:562",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/562",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "Escherichia coli",
+    "label": "taxon",
+    "matched_text": "ESCHERICHIA",
+    "curie": "NCBITAXON:561",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/561",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "Homo sapiens",
+    "label": "taxon",
+    "matched_text": "HOMO SAPIENS",
+    "curie": "NCBITAXON:9606",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/9606",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "Homo sapiens",
+    "label": "taxon",
+    "matched_text": "HOMO",
+    "curie": "NCBITAXON:9605",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/9605",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "Mus musculus",
+    "label": "taxon",
+    "matched_text": "MUS MUSCULUS",
+    "curie": "NCBITAXON:10090",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/10090",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "Mus musculus",
+    "label": "taxon",
+    "matched_text": "MUS",
+    "curie": "NCBITAXON:862507",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/862507",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "Mus musculus",
+    "label": "taxon",
+    "matched_text": "MUS",
+    "curie": "NCBITAXON:10088",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/10088",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "Mus musculus",
+    "label": "taxon",
+    "matched_text": "MUSCULUS",
+    "curie": "NCBITAXON:112137",
+    "uri": "http://purl.bioontology.org/ontology/NCBITAXON/112137",
+    "ontology": "NCBITAXON",
+    "pref_label": null
+  },
+  {
+    "input_text": "colon",
+    "label": "body_site",
+    "matched_text": "COLON",
+    "curie": "UBERON:0001155",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0001155",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "small intestine",
+    "label": "body_site",
+    "matched_text": "SMALL INTESTINE",
+    "curie": "UBERON:0002108",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0002108",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "small intestine",
+    "label": "body_site",
+    "matched_text": "INTESTINE",
+    "curie": "UBERON:0000160",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0000160",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "cecum",
+    "label": "body_site",
+    "matched_text": "CECUM",
+    "curie": "UBERON:0001153",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0001153",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "rectum",
+    "label": "body_site",
+    "matched_text": "RECTUM",
+    "curie": "UBERON:0001052",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0001052",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "rectum",
+    "label": "body_site",
+    "matched_text": "RECTUM",
+    "curie": "UBERON:0006866",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0006866",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "oral cavity",
+    "label": "body_site",
+    "matched_text": "ORAL CAVITY",
+    "curie": "UBERON:0000167",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0000167",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "oral cavity",
+    "label": "body_site",
+    "matched_text": "CAVITY",
+    "curie": "UBERON:0002553",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0002553",
+    "ontology": "UBERON",
+    "pref_label": null
+  },
+  {
+    "input_text": "stool",
+    "label": "body_site",
+    "matched_text": "STOOL",
+    "curie": "UBERON:0001988",
+    "uri": "http://purl.obolibrary.org/obo/UBERON_0001988",
+    "ontology": "UBERON",
+    "pref_label": null
+  }
+]

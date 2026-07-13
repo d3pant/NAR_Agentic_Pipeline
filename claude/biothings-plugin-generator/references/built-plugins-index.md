@@ -196,6 +196,24 @@ Update this file immediately after each generation. Before starting a new plugin
 
 ---
 
+### prime
+- **Datasource**: PRIME (Phenotypic Reference for Integrated Microbiome Enrichment) — NAR 2026, DOI: 10.1093/nar/gkaf1057
+- **Homepage**: https://primedb.sjtu.edu.cn
+- **Target API**: pending.api
+- **_id strategy**: Two document types — (1) Taxon: `{BioSample}_{SRARunID}_has_taxon_{taxid_int}` (e.g. `SAMD00518188_DRR396974_has_taxon_816`); (2) Phenotype: `{BioSample}_has_phenotype_{curie_local_id}` (e.g. `SAMD00518188_has_phenotype_0005015`)
+- **Data format**: Multi-file CSV (4 files: samples_metadata, projects_metadata, silva_species_absolute, silva_species_relative)
+- **Files ingested**: `samples_metadata.csv` (primary: demographics, phenotype, body site), `silva_species_absolute.csv` (species read counts), `silva_species_relative.csv` (proportions). `projects_metadata.csv` downloaded but not parsed (study-level reference). GG2 files, coarser ranks, and QIIME2 classifier artifacts excluded.
+- **Parser pattern**: Three-phase — Phase 1: OLS4 batch resolution (taxa→NCBITAXON, body sites→UBERON, phenotypes→MONDO/HP) + biothings_client batch taxon detail lookup; Phase 2: streaming zip of abs+rel CSVs with dict-based metadata lookup, skip zero-abundance taxa, skip samples missing core demographics; yields both taxon and phenotype association documents
+- **on_duplicates**: `error` (each BioSample+Run+taxid triple is unique)
+- **requires**: `pandas`, `requests`, `biothings_client`
+- **Output path**: `agent_outputs/prime_datasource/prime_plugin/`
+- **version.py strategy**: Zenodo API `https://zenodo.org/api/records/15711237` → `metadata.publication_date` → YYYYMMDD; fallback: `updated` field of `samples_metadata.csv` file entry
+- **Date generated**: 2026-07-12
+- **Version**: 1.0
+- **Notes**: Zenodo is the only viable automated download source — canonical site (primedb.sjtu.edu.cn) is JS-rendered. Download URLs use `?download=1` pattern verified as `text/plain` (not `text/html`). Species files are 496MB+581MB — parser streams them via `zip(abs_reader, rel_reader)` without loading into RAM. Expected high skip rate (~40–60%) on subject core-field check (many PRIME samples lack structured demographics). SILVA 138.2 used over GG2 for v1.0 (fewer taxa, 12K vs 25K). GG2 and coarser-rank abundance files targeted for v2.0. 53,449 samples × ~12,042 taxa theoretical max; actual documents much lower due to sparsity + demographic filtering.
+
+---
+
 ## Entry Template
 Copy this block and fill in all fields when adding a new plugin:
 

@@ -35,6 +35,10 @@ Before doing anything else, load these files if not already loaded:
 - [references/built-plugins-index.md](references/built-plugins-index.md) — check whether this datasource already has a generated plugin; if so, confirm with the user before proceeding
 - [references/manifest-schema.md](references/manifest-schema.md) — authoritative manifest field reference
 - [references/production-plugin-examples.md](references/production-plugin-examples.md) — real annotated plugins covering all major parser patterns; match the datasource to the closest pattern
+- [references/output_json_structure.md](references/output_json_structure.md) — output document schema; fields marked for resolution link to their resolution reference files
+- [references/entity_resolution.md](references/entity_resolution.md) — OLS4 batch resolution for taxon, body site, and phenotype CURIEs; includes slash-handling rule, rank-1 selection, and full pre-resolution block
+- [references/biothings-taxon-resolution.md](references/biothings-taxon-resolution.md) — batch pattern for resolving `parent_taxid`, `lineage`, `rank` via `biothings_client` (called after Tablassert taxon resolution)
+- [references/parser-processing-order.md](references/parser-processing-order.md) — chronology of tool calls: when to run entity resolution, taxon lookup, and document construction
 
 ### 1. Gather Required Information
 Collect the following (prompt the user if missing):
@@ -189,23 +193,10 @@ Rules for parser.py:
 - Convert `numpy.int64` to Python `int` before yielding
 - Replace NaN with None: `df = df.where(pd.notnull(df), None)`
 
-### 4. Choose _id Strategy Based on Target API
-- **MyChem.info**: InChIKey (e.g., `KTUFNOKKBVMGRW-UHFFFAOYSA-N`)
-- **MyGene.info**: NCBI Gene ID (Entrez) or Ensembl Gene ID
-- **MyDisease.info**: MONDO ID (e.g., `MONDO:0005015`)
-- **MyVariant.info**: HGVS notation
-- **pending.api**: Most specific unique ID available. Composite IDs like `f"{id1}-{id2}"` are acceptable.
+### 4. Structure Output Documents and `_id`
+Refer to [references/output_json_structure.md](references/output_json_structure.md) for the complete schema, `_id` construction rules, required vs optional fields, entity resolution requirements, and subject field skip logic. That file is authoritative — do not infer structure from these instructions.
 
-### 5. Structure Output Documents
-- Refer to references/output_json_structure.md
-- Top-level: `_id` + one key per datasource
-- Group related fields into sub-objects
-- Use lists for one-to-many relationships
-- Cross-references under `xrefs` sub-key
-- For association data, use `subject` / `object` / `relation` structure
-- For merged multi-row records, use `associatedWith` list pattern
-
-### 6. Save Output Files
+### 5. Save Output Files
 ```
 agent_outputs/<datasource_name>_datasource/<datasource_name>_plugin/
 ├── manifest.json
@@ -216,7 +207,7 @@ agent_outputs/<datasource_name>_datasource/<datasource_name>_plugin/
 
 After saving, **update [references/built-plugins-index.md](references/built-plugins-index.md)** by appending a new entry.
 
-### 6a. Generate design_rationale.md (Required)
+### 5a. Generate design_rationale.md (Required)
 Always generate `design_rationale.md`. Required sections:
 1. **Quick Stats** — top-of-file summary box with key numbers at a glance:
    - Source rows / Documents yielded / Rows skipped (with reason breakdown)
@@ -232,7 +223,7 @@ Always generate `design_rationale.md`. Required sections:
    - `xrefs.zinc`: 69.5%
 6. **Test Results Summary** — key metrics from biothings-cli test run
 
-### 6b. Optional: parser_report.json (Opt-In)
+### 5b. Optional: parser_report.json (Opt-In)
 Generate only when the user opts in via trigger phrases like "initialize run", "with parser report", "include parser report". See the full schema in the original pipeline documentation.
 
 ### 7. Validate with biothings-cli

@@ -36,3 +36,6 @@ build/
 
 # Large raw data files
 EDA/raw_data/silva_species_absolute.csv
+
+# Datassert entity resolution database (local only, ~several GB)
+datassert/

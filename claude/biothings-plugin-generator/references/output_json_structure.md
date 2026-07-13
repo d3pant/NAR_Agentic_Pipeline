@@ -12,7 +12,7 @@ Maps sample demographics (`subject`) to a microbial taxon (`object`) or phenotyp
 
 #### `association` fields
 
-- **`_id`** `string` — Unique identifier for the record. Constructed by concatenating the BioSample ID, predicate, and resolved taxon ID, separated by underscores: `{BioSample ID}_has_taxon_{taxon id}`. Both components must be resolved before construction — do not construct `_id` until `subject.BioSample ID` and `object.id` are confirmed. Must be unique per record; if a BioSample maps to multiple taxa via multiple SRA Runs, each record gets its own `_id` using the respective taxon ID. **Always present; never omit.**
+- **`_id`** `string` — Unique identifier for the record. Constructed by concatenating the BioSample ID, SRA Run, predicate, and resolved taxon ID without the prefix, separated by underscores: `{BioSample ID}_{SRA Run}_has_taxon_{taxon id}`. Both components must be resolved before construction — do not construct `_id` until `subject.BioSample ID` and `object.id` are confirmed. Must be unique per record; if a BioSample maps to multiple taxa via multiple SRA Runs, each record gets its own `_id` using the respective taxon ID. **Always present; never omit.**
 
 - **`BioProject`** `string` — BioProject ID from the metadata CSV file. May be absent in some cases; if so, follow instructions #.
 
@@ -36,27 +36,27 @@ Maps sample demographics (`subject`) to a microbial taxon (`object`) or phenotyp
 
 - **`publication.category`** `string` — Hardcoded as `"biolink:Publication"`. Does not change.
 
-- **`anatomical_entity.id`** `string` — Flagged for entity resolution; refer to #.
+- **`anatomical_entity.id`** `string` — Resolved UBERON CURIE for the body site (e.g. `UBERON:0001155`). See [entity_resolution.md](entity_resolution.md) for the OLS4 resolution pattern.
 
-- **`anatomical_entity.original_name`** `string` — Refers to the body site for the sample. Present in the metadata CSV file. If not present, raise an issue to the user and **omit the entire `anatomical_entity` block**. Remains the same across SRA Runs from the same BioSample.
+- **`anatomical_entity.original_name`** `string` — Refers to the body site for the sample. Present in the metadata CSV file. If not present, raise an issue to the user and **omit the entire `anatomical_entity` block**. Remains consistent across SRA Runs from the same BioSample.
 
 - **`anatomical_entity.category`** `string` — Hardcoded as `"biolink:AnatomicalEntity"`. Remains the same across databases.
 
 #### `object` fields
 
-- **`id`** `string` — Sample value given (e.g. `taxid:2051`). Refer to the entity resolution tool to resolve the ID. **MUST be resolved for all objects.**
+- **`id`** `string` — Resolved taxon CURIE (e.g. `taxid:2051`). See [entity_resolution.md](entity_resolution.md) for the OLS4 resolution pattern. **MUST be resolved for all objects.**
 
-- **`taxid`** `integer` — Use the resolved integer value. **MUST be resolved for all objects.**
+- **`taxid`** `integer` — Integer extracted from the resolved CURIE. **MUST be resolved for all objects.**
 
 - **`name`** `string` — Get the species name from the abundance level file.
 
 - **`original_name`** `string` — Raw species name as it appears in the abundance level file, before any resolution or normalization.
 
-- **`parent_taxid`** `integer` — Use the BioThings CLI to resolve; refer to file #.
+- **`parent_taxid`** `integer` — Resolved via `biothings_client` MyTaxon.info API. See [biothings-taxon-resolution.md](biothings-taxon-resolution.md).
 
-- **`lineage`** `list[integer]` — Use the BioThings CLI to resolve; refer to file #.
+- **`lineage`** `list[integer]` — Resolved via `biothings_client` MyTaxon.info API. See [biothings-taxon-resolution.md](biothings-taxon-resolution.md).
 
-- **`rank`** `string` — Use Biothings CLI for rank, refer to file #
+- **`rank`** `string` — Resolved via `biothings_client` MyTaxon.info API. See [biothings-taxon-resolution.md](biothings-taxon-resolution.md).
 
 - **`category`** `string` — Hardcoded as `"biolink:OrganismTaxon"`. Remains the same across databases.
 
@@ -64,17 +64,17 @@ Maps sample demographics (`subject`) to a microbial taxon (`object`) or phenotyp
 
 - **`BioSample ID`** `string` — Get from the metadata CSV file.
 
-- **`age`** `number | string`, **`gender`** `string`, **`height`** `string`, **`weight`** `number`, **`BMI`** `number`, **`ethnicity`** `string`, **`country`** `string`, **`continent`** `string`, **`smoke_status`** `string`, **`drinking_status`** `string`, **`diet_type`** `string` — Extract from the metadata CSV file. **If any one of the core fields {`age`, `gender`, `BMI`, `ethnicity`/`country`} is missing, skip the entire node — discard the `subject` and its associated `association` record entirely.** A field is considered missing if its value is `NaN`, an empty string `""`, or the literal string `"nan"` (case-insensitive). For non-core fields, apply the same rule: if the value is invalid or empty, omit the field entirely — do **not** use `null`.
+- **`age`** `number | string`, **`gender`** `string`, **`height`** `float | string`, **`weight`** `number`, **`BMI`** `number`, **`ethnicity`** `string`, **`country`** `string`, **`continent`** `string`, **`smoke_status`** `string`, **`drinking_status`** `string`, **`diet_type`** `string` — Extract from the metadata CSV file. **If any one of the core fields {`age`, `gender`, `BMI`, `ethnicity`/`country`} is missing, skip the entire node — discard the `subject` and its associated `association` record entirely.** A field is considered missing if its value is `NaN`, an empty string `""`, or the literal string `"nan"` (case-insensitive). For non-core fields, apply the same rule: if the value is invalid or empty, omit the field entirely — do **not** use `null`.
 
-- **`category`** `string` — Hardcoded as `"MaterialSample"`. Does not change.
+- **`category`** `string` — Hardcoded as `"biolink:MaterialSample"`. Does not change.
 
 ### JSON Structure
 
 ```json
 {
-  "_id": "SAMN00000000_has_taxon_taxid:2051",
+  "_id": "SAMN00000000_has_taxon_2051",
   "association": {
-    "category": "MaterialSampletoOrganismTaxonAssociation",
+    "category": "MaterialSampleToOrganismTaxonAssociation",
     "predicate": "has_taxon",
     "BioProject": "",
     "SRA Run ID": "",
@@ -131,11 +131,14 @@ Maps sample demographics (`subject`) to a microbial taxon (`object`) or phenotyp
     "smoke_status": "",
     "drinking_status": "",
     "diet_type": "",
-    "category": "MaterialSample"
+    "category": "biolink:MaterialSample"
   }
 }
 ```
 
+---
+
+For the chronology of tool calls and the order in which entity resolution, taxon lookup, and document construction must happen, see [parser-processing-order.md](parser-processing-order.md).
 ---
 
 ## Sample → Phenotype Association
@@ -146,7 +149,7 @@ Maps sample demographics (`subject`) to a microbial taxon (`object`) or phenotyp
 
 #### `_id`
 
-- **`_id`** `string` — Unique identifier for the record. Constructed by concatenating the BioSample ID, predicate, and resolved phenotype/disease CURIE ID, separated by underscores: `{BioSample ID}_has_phenotype_{phenotype id}`. Both components must be resolved before construction — do not construct `_id` until `subject.BioSample ID` and `object.id` are confirmed. Since each BioSample has exactly one phenotype node, this is unique per BioSample. **Always present; never omit.**
+- **`_id`** `string` — Unique identifier for the record. Constructed by concatenating the BioSample ID, predicate, and resolved phenotype/disease CURIE ID without the prefix, separated by underscores: `{BioSample ID}_has_phenotype_{phenotype id}`. Both components must be resolved before construction — do not construct `_id` until `subject.BioSample ID` and `object.id` are confirmed. Since each BioSample has exactly one phenotype node, this is unique per BioSample. **Always present; never omit.**
 
 #### `association` fields
 
@@ -157,9 +160,9 @@ Maps sample demographics (`subject`) to a microbial taxon (`object`) or phenotyp
 
 #### `object` fields
 
-- **`id`** `string` — CURIE ID for the disease/phenotype (e.g. `MONDO:0005015`). Refer to the entity resolution tool to resolve. **MUST be resolved.**
+- **`id`** `string` — Resolved CURIE for the disease/phenotype (e.g. `MONDO:0005015`). See [entity_resolution.md](entity_resolution.md) for the OLS4 resolution pattern. **MUST be resolved.**
 - **`original_name`** `string` — Human-readable disease or phenotype name from the metadata CSV.
-- **`category`** `string` — Hardcoded as `"biolink:Disease"` (or `"biolink:PhenotypicFeature"` as appropriate).
+- **`category`** `string` — Derived from the resolved CURIE prefix: `MONDO:` → `"biolink:Disease"`, `HP:` → `"biolink:PhenotypicFeature"`. Never hardcode — always inspect the prefix of the returned CURIE.
 
 #### `subject` fields
 
@@ -169,7 +172,7 @@ Same rules as the sample→taxon association. **If any one of the core fields {`
 
 ```json
 {
-  "_id": "SAMN00000000_has_phenotype_MONDO:0005015",
+  "_id": "SAMN00000000_has_phenotype_0005015",
   "association": {
     "category": "biolink:MaterialSampleToDiseaseOrPhenotypicFeatureAssociation",
     "predicate": "biolink:has_phenotype",
@@ -203,7 +206,11 @@ Same rules as the sample→taxon association. **If any one of the core fields {`
     "smoke_status": "",
     "drinking_status": "",
     "diet_type": "",
-    "category": "MaterialSample"
+    "category": "biolink:MaterialSample"
   }
 }
 ```
+
+---
+
+For the chronology of tool calls and the order in which entity resolution, taxon lookup, and document construction must happen, see [parser-processing-order.md](parser-processing-order.md).

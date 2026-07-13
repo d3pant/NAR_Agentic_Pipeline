@@ -3,40 +3,48 @@
     "verdict": "RECOMMEND_INGEST",
     "scores": {
         "relevance": {
-            "score": 9,
-            "justification": "PRIME is a perfect fit for the Demographic-KG pipeline. It provides all three required dimensions: (1) per-sample demographic metadata (age, sex, BMI, race/ethnicity, country, smoking/drinking status, diet, and more), (2) species-level microbiome data (ASV-level taxonomic profiles at phylum through species from both SILVA 138.2 and Greengenes2 2024.09), and (3) rich phenotypic data across 101 disease/health phenotypes covering 93 body sites. It is actively maintained (hosted on jCloud at SJTU, continuously updated with new studies) and is already at 53,449 samples from 111 studies as of the NAR 2026 paper."
+            "score": 8,
+            "justification": "PRIME contains 53,449 human 16S rRNA amplicon samples from 111 public studies with species-level microbial abundance (phylum through species via SILVA 138.2 and Greengenes2 2024.09), 101 phenotypic categories (including disease status), and per-sample host metadata including age, sex, and BMI. Ethnicity/race is not explicitly confirmed in the paper schema. Data is fully structured (CSV). Actively maintained (Zenodo deposit June 2025, paper published January 2026). NCBI taxon IDs used for taxon mapping."
         },
         "novelty": {
             "score": 5,
-            "justification": "PRIME is entirely novel to BioThings. No existing BioThings API (mygene.info, mychem.info, myvariant.info, mydisease.info) ingests human 16S rRNA microbiome data with harmonized per-sample phenotypic metadata. The combination of standardized taxonomic abundance tables + manually curated demographic/clinical metadata per sample is unique. The HumanMetagenomeDB (already reviewed) covers metagenomic samples; PRIME covers 16S rRNA amplicon data, a distinct and complementary scope. No overlap with any source in existing-biothings-plugins.json."
+            "justification": "No existing BioThings API covers human 16S rRNA microbiome abundance data at per-sample resolution with linked host demographics and phenotypes. GMrepo covers gut microbiome but is restricted to gut/fecal samples; PRIME covers 93 body sites across 10 body systems. The entity type (microbiome sample with per-taxon read counts and relative abundances linked to host demographics) is entirely new to BioThings. 53,449 samples from 111 studies provide novel breadth."
         },
         "openness": {
             "pass": true,
-            "score": 5,
-            "justification": "Fully open. The paper states 'All data in PRIME are openly accessible without login or restriction.' The API itself confirms 'No authentication required' and 'No rate limiting currently applied.' The cache download endpoint at /api/v1/abundances/cache/:db/:rank/:type returns CSV files directly with no auth. The metadata POST endpoints also require no auth. License is not explicitly named on the website but the paper and database state free, open access. Confirmed by direct API access during inspection."
+            "score": 4,
+            "justification": "All files freely downloadable from Zenodo (doi:10.5281/zenodo.15711237) without login, account, or API key. Dual-licensed CC-BY 4.0 + MIT. No click-through gate. Attribution required under CC-BY 4.0 but no commercial restriction. PRIME homepage states data is 'openly accessible without login or restriction'."
         }
     },
     "evidence": {
-        "scope": "Curated and standardized database of human-associated 16S rRNA amplicon sequencing data. Contains 53,449 samples from 111 public studies across 93 body sites and 101 phenotypic categories. Each sample has: (1) manually curated sample-level metadata (demographics, phenotype, body site, sequencing protocol, experimental design, geographic origin), (2) taxonomic abundance tables at phylum-species for both SILVA 138.2 and Greengenes2 2024.09 as absolute and relative abundances, and (3) NCBI Taxonomy-mapped taxon identifiers.",
-        "overlap": "No overlap with existing BioThings sources. PRIME is the only source covering 16S rRNA microbiome + harmonized demographic/phenotypic metadata for pending.api.",
-        "entity_types": ["microbiome_sample", "project", "phenotype", "taxon", "body_site"],
-        "identifiers_found": ["SRA Run accession (DRR/ERR/SRR)", "BioProject accession", "BioSample accession", "NCBI Taxonomy ID", "Phenotype name", "Body site name"],
+        "scope": "Human-associated 16S rRNA amplicon microbiome data. Contains: (1) taxonomic abundance tables (absolute read counts + relative abundances) at phylum/class/order/family/genus/species for SILVA 138.2 and Greengenes2 2024.09 reference databases; (2) per-sample metadata including body site (93 sites across 10 systems), phenotypic category (101 categories), age, sex, BMI, disease status, sequencing protocol, and data quality scores; (3) per-study metadata for 111 source studies.",
+        "overlap": "Partial overlap with GMrepo (gut/fecal microbiome, also 16S). No overlap with MyChem, MyGene, MyDisease, or MyVariant. PRIME substantially extends GMrepo: 93 body sites vs gut-only, 53,449 samples vs GMrepo's scope, 101 phenotype categories vs GMrepo's disease focus, and DADA2-reprocessed standardized abundance values vs study-native formats.",
+        "entity_types": ["microbiome_sample", "microbial_taxon", "phenotype", "body_site", "study"],
+        "identifiers_found": ["NCBI Taxonomy (taxon IDs)", "SRA project IDs", "controlled phenotype vocabulary (PRIME internal)", "body site ontology (PRIME internal 10-system hierarchy)"],
         "record_count": 53449
     },
     "license": {
-        "name": "Open Access (no explicit license stated; free, unrestricted access confirmed)",
-        "url": "https://primedb.sjtu.edu.cn",
-        "restrictions": []
+        "name": "CC BY 4.0 + MIT",
+        "url": "https://creativecommons.org/licenses/by/4.0/",
+        "restrictions": ["Attribution required under CC-BY 4.0"]
     },
     "urls": {
         "homepage": "https://primedb.sjtu.edu.cn",
         "download": [
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/genus/absolute",
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/silva/species/absolute",
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/genus/absolute",
-            "https://primedb.sjtu.edu.cn/api/v1/abundances/cache/gg/species/absolute"
+            "https://zenodo.org/records/15711237/files/samples_metadata.csv",
+            "https://zenodo.org/records/15711237/files/projects_metadata.csv",
+            "https://zenodo.org/records/15711237/files/silva_species_absolute.csv",
+            "https://zenodo.org/records/15711237/files/silva_species_relative.csv",
+            "https://zenodo.org/records/15711237/files/gg_species_absolute.csv",
+            "https://zenodo.org/records/15711237/files/gg_species_relative.csv",
+            "https://zenodo.org/records/15711237/files/silva_genus_absolute.csv",
+            "https://zenodo.org/records/15711237/files/silva_genus_relative.csv",
+            "https://zenodo.org/records/15711237/files/gg_genus_absolute.csv",
+            "https://zenodo.org/records/15711237/files/gg_genus_relative.csv"
         ],
+        "zenodo": "https://zenodo.org/records/15711237",
         "api": "https://primedb.sjtu.edu.cn/api/v1",
+        "r_package": "https://github.com/reckonzzz/primeDB",
         "paper_doi": "10.1093/nar/gkaf1057",
         "pmid": "41171140",
         "pmc": "PMC12807763"
@@ -45,29 +53,25 @@
         "exists": true,
         "base_url": "https://primedb.sjtu.edu.cn/api/v1",
         "auth_required": false,
-        "rate_limits": "none (paper and API both confirm no rate limiting)",
-        "pagination": "limit parameter on list endpoints",
-        "record_coverage": "full; bulk cache endpoints return all 53,449 samples",
-        "endpoints": {
-            "bulk_abundance": "GET /api/v1/abundances/cache/{db}/{rank}/{type} → CSV download",
-            "sample_metadata_batch": "POST /api/v1/metadatas/sample (body: {runs: [...]})",
-            "project_metadata_batch": "POST /api/v1/metadatas/project (body: {project_accessions: [...]})",
-            "sample_list": "GET /api/v1/samples/list",
-            "project_list": "GET /api/v1/projects/list",
-            "phenotype_list": "GET /api/v1/phenotypes/list",
-            "stats": "GET /api/v1/stats"
-        }
+        "rate_limits": "none documented",
+        "pagination": "unknown",
+        "record_coverage": "query access; custom subset download via async generation (available within 24h)"
     },
     "target_api": "pending.api",
     "risks": [
-        "No explicit open-source license (MIT/CC) stated — free access is confirmed but redistribution terms are not formally specified. Should be flagged in design_rationale.md.",
-        "Bulk metadata download is only via POST batch API (no single-file metadata dump like the abundance cache) — the plugin will need to paginate through sample IDs or use the samples/list endpoint to enumerate all SRR IDs, then batch-fetch metadata.",
-        "API-only ingestion required (no flat-file metadata dump) — plugin will need a custom API-crawl dumper.py for metadata; abundance data has direct cache CSV endpoints.",
-        "Database is hosted on institutional infrastructure (jCloud/SJTU) — long-term availability depends on institutional support, which the paper says is guaranteed."
+        "Ethnicity/race field not explicitly confirmed in samples_metadata.csv schema — verify during site inspection",
+        "Bulk abundance files are large (up to 1.8 GB per file; 9.1 GB total) — ingestion strategy must handle file size",
+        "Controlled phenotype vocabulary is PRIME-internal (not MONDO/HPO) — entity resolution to standard ontologies needed",
+        "Body site categorization uses PRIME's own 10-system hierarchy — mapping to standard ontology (UBERON/FMA) needed",
+        "Custom subset downloads via async generation are not suitable for bulk ingestion — use Zenodo static files instead",
+        "NCBI taxon ID mapping described as attempted but may be incomplete for all annotated taxa"
     ],
     "next_actions": [
-        "Run site inspection to confirm all cache URLs are accessible and sample metadata schema",
-        "Proceed to plugin generation with hybrid ingestion: cache CSV for abundances + API crawl for sample metadata"
+        "Run site inspection to verify Zenodo file access, confirm samples_metadata.csv column schema, and check API endpoints",
+        "Determine ingestion strategy: species-level abundance tables (SILVA or GG2 or both) + samples_metadata.csv as primary files",
+        "Resolve phenotype controlled vocabulary to MONDO/HPO CURIEs",
+        "Map body site hierarchy to UBERON CURIEs",
+        "Confirm ethnicity/race field presence in metadata"
     ],
-    "evaluated_at": "2026-06-30"
+    "evaluated_at": "2026-07-12"
 }
